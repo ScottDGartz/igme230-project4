@@ -51,7 +51,6 @@ h1{
   width: 800px;
   height: 800px;
 }
-
 .resumeHead{
   font-family: 'EB Garamond','serif';
   text-align: left;
@@ -74,7 +73,12 @@ h1{
    border: none;
    border-top: 5px solid black;
    border-bottom: 0px solid black;
-   }
+}
+canvas{
+    background: #eee;
+    display:block;
+    margin:0 auto;
+}
 
 
 @media print{
