@@ -35,13 +35,17 @@ class Circle{
 }
 
 class Rectangle{
-    constructor(){
-
+    constructor(x,y,w,h,fill){
+        this.x = x;
+        this.y = y;
+        this.width = w;
+        this.height = h;
+        this.fill = fill;
     }
     draw(){
         ctx.beginPath();
         ctx.rect(this.x,this.y,this.width,this.height);
-        ctx.fillstyle= this.fill;
+        ctx.fillStyle = this.fill;
         ctx.fill();
         ctx.closePath();
     }
@@ -53,8 +57,10 @@ class Rectangle{
 var dx = 2; //Delta x, or change in x position
 var dy = -2;
 var ball = new Circle(10,240,160,2,2,"#002321");
+var rect = new Rectangle(20,20,30,30,"#00000E")
 function draw() {
     ctx.clearRect(0,0,game.width,game.height);
     ball.draw();
+    rect.draw();
 }
 setInterval(draw, 10);
