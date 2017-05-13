@@ -15,9 +15,20 @@ class Circle{
         ctx.fillStyle = "#0095DD";
         ctx.fill();
         ctx.closePath();
+        this.wallCollision();
         this.x = this.x + this.dx;
         this.y = this.y + this.dy;
     }
+    wallCollision(){
+    if(this.y + this.dy < this.radius || this.y + this.dy > game.height - this.radius)
+    {
+        this.dy = -this.dy;
+    }
+    if(this.x + this.dx < this.radius || this.x + this.dx > game.width - this.radius)
+    {
+        this.dx = -this.dx;
+    }
+}
 }
 
 var dx = 2; //Delta x, or change in x position
@@ -26,22 +37,5 @@ var ball = new Circle(10,240,160,2,2);
 function draw() {
     ctx.clearRect(0,0,game.width,game.height);
     ball.draw();
-}
-function drawBall(){
-    ctx.beginPath();
-    ctx.arc(x, y, radius, 0, Math.PI * 2);
-    ctx.fillStyle = "#0095DD";
-    ctx.fill();
-    ctx.closePath();
-}
-function wallCollision(){
-    if(y + dy < radius || y + dy > game.height - radius)
-    {
-        dy = -dy;
-    }
-    if(x + dx < radius || x + dx > game.width - radius)
-    {
-        dx = -dx;
-    }
 }
 setInterval(draw, 10);
