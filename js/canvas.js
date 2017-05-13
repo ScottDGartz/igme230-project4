@@ -1,10 +1,12 @@
 var game = document.getElementById("game");
 var ctx = game.getContext("2d");
 class Circle{
-    constructor(radius,x,y){
+    constructor(radius,x,y,dx,dy){
         this.x = x;
         this.y = y;
         this.radius = radius;
+        this.dx = dx;
+        this.dy = dy;
     }
 
     draw(){
@@ -13,13 +15,16 @@ class Circle{
         ctx.fillStyle = "#0095DD";
         ctx.fill();
         ctx.closePath();
+        this.x = this.x + this.dx;
+        this.y = this.y + this.dy;
     }
 }
 
 var dx = 2; //Delta x, or change in x position
 var dy = -2;
-var ball = new Circle(10,240,160);
+var ball = new Circle(10,240,160,2,2);
 function draw() {
+    ctx.clearRect(0,0,game.width,game.height);
     ball.draw();
 }
 function drawBall(){
