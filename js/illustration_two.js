@@ -190,7 +190,8 @@ var box = new Rectangle(new Vector(0, 0), 20, 20, "#3AC3D6")
 
 var objects = [];
 var i;
-for(i = 0; i < 10; i++){
+var objCount = 250;
+for(i = 0; i < objCount; i++){
     if(i % 2 == 0)
     {   objects.push(new Circle(10,new Vector(Math.random()*1000,Math.random() * 1000),randomColor()));
     }
@@ -202,7 +203,7 @@ function draw() {
     ctx.clearRect(0, 0, game.width, game.height);
     ball.loop();
     box.loop();
-    for (i = 0; i < 10; i++){
+    for (i = 0; i < objCount; i++){
         objects[i].loop();
     }
 }
@@ -222,7 +223,7 @@ function updateTarget(event) {
     ball.newTarget(point);
     box.newTarget(point);
     var j;
-    for(j = 0; j < 10; j++){
+    for(j = 0; j < objCount; j++){
         objects[j].newTarget(point);
     }
 }
