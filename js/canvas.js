@@ -1,4 +1,5 @@
 var game = document.getElementById("game");
+game.onclick = updateTarget;
 var ctx = game.getContext("2d");
 
 //class declarations
@@ -10,6 +11,8 @@ class Circle {
         this.dx = dx;
         this.dy = dy;
         this.fill = fill;
+        this.targetX;
+        this.targetY;
     }
 
     draw() {
@@ -19,8 +22,8 @@ class Circle {
         ctx.fill();
         ctx.closePath();
         this.wallCollision();
-        this.x = this.x + this.dx;
-        this.y = this.y + this.dy;
+//        this.x = this.x + this.dx;
+//        this.y = this.y + this.dy;
     }
     wallCollision() {
         if (this.y + this.dy < this.radius || this.y + this.dy > game.height - this.radius) {
@@ -30,7 +33,11 @@ class Circle {
             this.dx = -this.dx;
         }
     }
-    newTarget(){}
+    newTarget(x,y){
+        this.x = x;
+        this.y = y;
+
+    }
 }
 
 class Rectangle {
@@ -61,7 +68,7 @@ class Rectangle {
             this.dy = -this.dy;
         }
     }
-    newTarget(){
+    newTarget(x,y){
 
     }
 }
@@ -77,7 +84,10 @@ function draw() {
     rect.draw();
 }
 setInterval(draw, 10);
-function updateTarget(){
-    ball.newTarget();
-    rect.newTarget();
+function updateTarget(event){
+    var rect = game.getBoundingClientRect();
+    var x = event.clientX - rect.left;
+    var y = event.clientY - rect.top;
+    ball.newTarget(x,y);
+    rect.newTarget(x,y);
 }
