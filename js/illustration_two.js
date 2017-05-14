@@ -191,7 +191,12 @@ var box = new Rectangle(new Vector(0, 0), 20, 20, "#3AC3D6")
 var objects = [];
 var i;
 for(i = 0; i < 10; i++){
-        objects.push(new Circle(10,new Vector(Math.random()*1000,Math.random() * 1000),randomColor()));
+    if(i % 2 == 0)
+    {   objects.push(new Circle(10,new Vector(Math.random()*1000,Math.random() * 1000),randomColor()));
+    }
+    else{
+        objects.push(new Rectangle(new Vector(Math.random()*1000,Math.random()*1000),20,20,randomColor));
+    }
 }
 function draw() {
     ctx.clearRect(0, 0, game.width, game.height);
