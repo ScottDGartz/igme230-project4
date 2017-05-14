@@ -40,34 +40,31 @@ class Circle {
 }
 
 class Rectangle {
-    constructor(x, y, w, h, fill, dx, dy) {
-        this.x = x;
-        this.y = y;
+    constructor(loc, velocity, w, h, fill) {
+        this.loc = loc;
+        this.velo = velocity;
         this.width = w;
         this.height = h;
         this.fill = fill;
-        this.dx = dx;
-        this.dy = dy;
     }
     draw() {
         ctx.beginPath();
-        ctx.rect(this.x, this.y, this.width, this.height);
+        ctx.rect(this.loc.x, this.loc.y, this.width, this.height);
         ctx.fillStyle = this.fill;
         ctx.fill();
         ctx.closePath();
         this.wallCollision();
-        this.x += this.dx;
-        this.y += this.dy;
+        this.loc.add(this.velo);
     }
     wallCollision() {
-        if (this.x < 0 || this.x + this.width > game.width) {
-            this.dx = -this.dx;
+        if (this.loc.x < 0 || this.loc.x + this.width > game.width) {
+            this.velo.x = -this.velo.x;
         }
-        if (this.y < 0 || this.y + this.height > game.height) {
-            this.dy = -this.dy;
+        if (this.loc.y < 0 || this.loc.y + this.height > game.height) {
+            this.velo.y = -this.velo.y;
         }
     }
-    newTarget(x, y) {
+    newTarget(b) {
 
     }
 }
@@ -92,8 +89,7 @@ class Vector {
 var dx = 2; //Delta x, or change in x position
 var dy = -2;
 var ball = new Circle(10, new Vector(240, 160), new Vector(2,2), "#D22356");
-var rect = new Rectangle(20, 20, 30, 30, "#A2FA25", 2, 2)
-
+var rect = new Rectangle(new Vector(0,0),new Vector(2,3),20,20,"#3AC3D6")
 function draw() {
     ctx.clearRect(0, 0, game.width, game.height);
     ball.draw();
