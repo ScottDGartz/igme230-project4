@@ -9,7 +9,8 @@ class Circle {
         this.velo = velocity;
         this.radius = radius;
         this.fill = fill;
-        this.acceleration = new Vector(.001,-.01);
+        this.target = new Vector(game.width / 2, game.height / 2);
+        this.acceleration;
         this.maxSpeed = 5;
     }
     loop() {
@@ -18,6 +19,9 @@ class Circle {
         this.draw();
     }
     update() {
+        this.acceleration = vectorSub(this.loc,this.target);
+        this.acceleration.normalize();
+        this.acceleration.scaleUp(.1);
         this.velo.add(this.acceleration);
         this.velo.limit(this.maxSpeed);
         this.loc.add(this.velo);
@@ -38,9 +42,7 @@ class Circle {
         }
     }
     newTarget(vector) {
-        this.loc.x = vector.x;
-        this.loc.y = vector.y;
-
+        this.target = vector;
     }
 
 }
@@ -52,7 +54,7 @@ class Rectangle {
         this.width = w;
         this.height = h;
         this.fill = fill;
-        this.accel = new Vector(-.001, 0.01);
+        this.target = new Vector(game.width/2, game.height/2);
         this.maxSpeed = 5;
     }
 
@@ -63,6 +65,9 @@ class Rectangle {
     }
 
     update() {
+        this.accel = vectorSub(this.loc,this.target);
+        this.accel.normalize();
+        this.accel.scaleUp(.1);
         this.velo.add(this.accel);
         this.velo.limit(this.maxSpeed);
         this.loc.add(this.velo);
@@ -93,7 +98,7 @@ class Rectangle {
     }
 
     newTarget(b) {
-
+        this.target = b;
     }
 }
 
@@ -144,16 +149,17 @@ class Vector {
             this.scaleUp(max);
         }
     }
+
 }
 var dx = 2; //Delta x, or change in x position
 var dy = -2;
 var ball = new Circle(10, new Vector(240, 160), new Vector(2, 2), "#D22356");
-var rect = new Rectangle(new Vector(0, 0), new Vector(2, 3), 20, 20, "#3AC3D6")
+var box = new Rectangle(new Vector(0, 0), new Vector(2, 3), 20, 20, "#3AC3D6")
 
 function draw() {
     ctx.clearRect(0, 0, game.width, game.height);
     ball.loop();
-    rect.loop();
+    box.loop();
 }
 
 setInterval(draw, 10);
@@ -162,4 +168,9 @@ function updateTarget(event) {
     var rect = game.getBoundingClientRect();
     var point = new Vector(event.clientX - rect.left, event.clientY - rect.top);
     ball.newTarget(point);
+    box.newTarget(point);
+}
+
+function vectorSub(e, f) {
+    return new Vector(f.x - e.x, f.y - e.y)
 }
