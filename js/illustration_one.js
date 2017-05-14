@@ -73,18 +73,34 @@ class Vector {
     constructor(x, y) {
         this.x = x;
         this.y = y;
-        this.magnitude = Math.sqrt(this.x * this.x + this.y * this.y);
+        this.calcMag();
     }
     subtract(b){
         this.x = this.x - b.x;
         this.y = this.y - b.y;
+        this.calcMag();
     }
-
     add(b){
         this.x = this.x + b.x;
         this.y = this.y + b.y;
+        this.calcMag();
     }
-
+    scaleUp(n){
+        this.x = this.x * n;
+        this.y = this.y * n;
+        this.calcMag();
+    }
+    scaleDown(n){
+        this.x = this.x * n;
+        this.y = this.y * n;
+        this.calcMag();
+    }
+    calcMag(){
+        this.magnitude = Math.sqrt(this.x * this.x + this.y * this.y);
+    }
+    normalize(){
+        this.scaleDown(this.magnitude);
+    }
 }
 var dx = 2; //Delta x, or change in x position
 var dy = -2;
