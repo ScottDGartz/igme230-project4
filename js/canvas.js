@@ -22,8 +22,8 @@ class Circle {
         ctx.fill();
         ctx.closePath();
         this.wallCollision();
-//        this.x = this.x + this.dx;
-//        this.y = this.y + this.dy;
+        //        this.x = this.x + this.dx;
+        //        this.y = this.y + this.dy;
     }
     wallCollision() {
         if (this.y + this.dy < this.radius || this.y + this.dy > game.height - this.radius) {
@@ -33,9 +33,9 @@ class Circle {
             this.dx = -this.dx;
         }
     }
-    newTarget(x,y){
-        this.x = x;
-        this.y = y;
+    newTarget(x, y) {
+        this.targetX = x;
+        this.targetY = y;
 
     }
 }
@@ -68,26 +68,27 @@ class Rectangle {
             this.dy = -this.dy;
         }
     }
-    newTarget(x,y){
+    newTarget(x, y) {
 
     }
 }
 
 var dx = 2; //Delta x, or change in x position
 var dy = -2;
-var ball = new Circle(10, 240, 160, 2, 2, "#002321");
-var rect = new Rectangle(20, 20, 30, 30, "#00000E", 2, 2)
+var ball = new Circle(10, 240, 160, 2, 2, "#D22356");
+var rect = new Rectangle(20, 20, 30, 30, "#A2FA25", 2, 2)
 
 function draw() {
     ctx.clearRect(0, 0, game.width, game.height);
     ball.draw();
     rect.draw();
 }
+
 setInterval(draw, 10);
-function updateTarget(event){
+
+function updateTarget(event) {
     var rect = game.getBoundingClientRect();
     var x = event.clientX - rect.left;
     var y = event.clientY - rect.top;
-    ball.newTarget(x,y);
-    rect.newTarget(x,y);
+    ball.newTarget(x, y);
 }
