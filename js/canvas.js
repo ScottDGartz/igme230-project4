@@ -35,12 +35,14 @@ class Circle{
 }
 
 class Rectangle{
-    constructor(x,y,w,h,fill){
+    constructor(x,y,w,h,fill,dx,dy){
         this.x = x;
         this.y = y;
         this.width = w;
         this.height = h;
         this.fill = fill;
+        this.dx = dx;
+        this.dy = dy;
     }
     draw(){
         ctx.beginPath();
@@ -48,16 +50,24 @@ class Rectangle{
         ctx.fillStyle = this.fill;
         ctx.fill();
         ctx.closePath();
+        this.wallCollision();
+        this.x += this.dx;
+        this.y += this.dy;
     }
     wallCollision(){
-
+        if(this.x < 0 || this.x + this.width > game.width){
+            this.dx = -this.dx;
+        }
+        if(this.y < 0 || this.y + this.height > game.height){
+            this.dy = -this.dy;
+        }
     }
 }
 
 var dx = 2; //Delta x, or change in x position
 var dy = -2;
 var ball = new Circle(10,240,160,2,2,"#002321");
-var rect = new Rectangle(20,20,30,30,"#00000E")
+var rect = new Rectangle(20,20,30,30,"#00000E",2,2)
 function draw() {
     ctx.clearRect(0,0,game.width,game.height);
     ball.draw();
