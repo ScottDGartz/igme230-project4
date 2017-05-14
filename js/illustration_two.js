@@ -5,7 +5,7 @@ var ctx = game.getContext("2d");
 //class declarations
 class Circle {
     //Radius num, location vector, velocity vector and fill color
-    constructor(radius, loc, fill) {
+    constructor(radius, loc, fill, maxSpeed) {
         this.loc = loc;
         this.velo = new Vector(0,0);
         this.radius = radius;
@@ -13,7 +13,7 @@ class Circle {
         //Sets the starting target to center of the canvas
         this.target = new Vector(game.width / 2, game.height / 2);
         this.acceleration;
-        this.maxSpeed = 5;
+        this.maxSpeed = maxSpeed;
     }
     //Calls all necessary functions in order
     loop() {
@@ -58,7 +58,7 @@ class Circle {
 class Rectangle {
     //Takes a location vector, velocity vector,
     //width, height, and a fill color
-    constructor(loc, w, h, fill) {
+    constructor(loc, w, h, fill,maxSpeed) {
         this.loc = loc;
         this.velo = new Vector(0, 0);
         this.width = w;
@@ -66,7 +66,7 @@ class Rectangle {
         this.fill = fill;
         //Target is set to middle of canvas to start
         this.target = new Vector(game.width/2, game.height/2);
-        this.maxSpeed = 5;
+        this.maxSpeed = maxSpeed;
     }
     //Calls all necessary functions in correct order
     loop() {
@@ -190,13 +190,13 @@ var box = new Rectangle(new Vector(0, 0), 20, 20, "#3AC3D6")
 
 var objects = [];
 var i;
-var objCount = 250;
+var objCount = 100;
 for(i = 0; i < objCount; i++){
     if(i % 2 == 0)
-    {   objects.push(new Circle(10,new Vector(Math.random()*1000,Math.random() * 1000),randomColor()));
+    {   objects.push(new Circle(10,new Vector(Math.random()*1000,Math.random() * 1000),randomColor(),Math.random()*10));
     }
     else{
-        objects.push(new Rectangle(new Vector(Math.random()*1000,Math.random()*1000),20,20,randomColor));
+        objects.push(new Rectangle(new Vector(Math.random()*1000,Math.random()*1000),20,20,randomColor,Math.random() * 10));
     }
 }
 function draw() {
