@@ -79,6 +79,7 @@ class Rectangle {
     //Calculates the steering force on the rectangle
     //and applies it
     update() {
+//        if(node)
         this.accel = vectorSub(this.loc,this.target);
         this.accel.normalize();
         this.accel.scaleUp(.1);
@@ -186,10 +187,10 @@ class Vector {
 
 }
 
-var ball = new Circle(10, new Vector(240, 160), "#D22356");
-var box = new Rectangle(new Vector(0, 0), 20, 20, "#3AC3D6")
+
 
 var objects = [];
+var nodes = [];
 var i;
 var objCount = 100;
 for(i = 0; i < objCount; i++){
@@ -202,9 +203,8 @@ for(i = 0; i < objCount; i++){
 }
 function draw() {
     ctx.clearRect(0, 0, game.width, game.height);
-    ball.loop();
-    box.loop();
-    for (i = 0; i < objCount; i++){
+
+    for (i = 0; i < objects.length; i++){
         objects[i].loop();
     }
 }
@@ -221,10 +221,9 @@ setInterval(draw, 10);
 function updateTarget(event) {
     var rect = game.getBoundingClientRect();
     var point = new Vector(event.clientX - rect.left, event.clientY - rect.top);
-    ball.newTarget(point);
-    box.newTarget(point);
+
     var j;
-    for(j = 0; j < objCount; j++){
+    for(j = 0; j < objects.length; j++){
         objects[j].newTarget(point);
     }
 }
@@ -233,6 +232,7 @@ function vectorSub(e, f) {
     return new Vector(f.x - e.x, f.y - e.y)
 }
 
-function createNode(){
-
+function createNode(event){
+    var rect= game.getBoundingClientRect();
+    var point = new Vector(event.clientX - rect.left, event.clientY - rect.top)
 }
