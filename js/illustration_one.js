@@ -4,9 +4,8 @@ var ctx = game.getContext("2d");
 
 //class declarations
 class Circle {
-    constructor(radius, x, y, dx, dy, fill) {
-        this.x = x;
-        this.y = y;
+    constructor(radius, point, dx, dy, fill) {
+        this.point = point;
         this.radius = radius;
         this.dx = dx;
         this.dy = dy;
@@ -18,7 +17,7 @@ class Circle {
 
     draw() {
         ctx.beginPath();
-        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.arc(this.point.x, this.point.y, this.radius, 0, Math.PI * 2);
         ctx.fillStyle = this.fill;
         ctx.fill();
         ctx.closePath();
@@ -35,8 +34,8 @@ class Circle {
         }
     }
     newTarget(point) {
-        this.x = point.x;
-        this.y = point.y;
+        this.point.x = point.x;
+        this.point.y = point.y;
 
     }
 
@@ -83,7 +82,7 @@ class Point {
 }
 var dx = 2; //Delta x, or change in x position
 var dy = -2;
-var ball = new Circle(10, 240, 160, 2, 2, "#D22356");
+var ball = new Circle(10, new Point(240, 160), 2, 2, "#D22356");
 var rect = new Rectangle(20, 20, 30, 30, "#A2FA25", 2, 2)
 
 function draw() {
