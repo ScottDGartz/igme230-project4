@@ -1,5 +1,6 @@
 var game = document.getElementById("game");
 game.onmousemove = updateTarget;
+game.onclick = createNode;
 var ctx = game.getContext("2d");
 
 //class declarations
@@ -230,4 +231,8 @@ function updateTarget(event) {
 
 function vectorSub(e, f) {
     return new Vector(f.x - e.x, f.y - e.y)
+}
+
+function createNode(){
+
 }
