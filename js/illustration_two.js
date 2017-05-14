@@ -5,9 +5,9 @@ var ctx = game.getContext("2d");
 //class declarations
 class Circle {
     //Radius num, location vector, velocity vector and fill color
-    constructor(radius, loc, velocity, fill) {
+    constructor(radius, loc, fill) {
         this.loc = loc;
-        this.velo = velocity;
+        this.velo = new Vector(0,0);
         this.radius = radius;
         this.fill = fill;
         //Sets the starting target to center of the canvas
@@ -58,9 +58,9 @@ class Circle {
 class Rectangle {
     //Takes a location vector, velocity vector,
     //width, height, and a fill color
-    constructor(loc, velocity, w, h, fill) {
+    constructor(loc, w, h, fill) {
         this.loc = loc;
-        this.velo = velocity;
+        this.velo = new Vector(0, 0);
         this.width = w;
         this.height = h;
         this.fill = fill;
@@ -131,6 +131,7 @@ class Node{
         ctx.closePath();
     }
 }
+
 //Class to represent x and y coordinates
 //Can be a point, a direction vector, velocity, acceleration, anything really.
 class Vector {
@@ -183,17 +184,31 @@ class Vector {
     }
 
 }
-var dx = 2; //Delta x, or change in x position
-var dy = -2;
-var ball = new Circle(10, new Vector(240, 160), new Vector(2, 2), "#D22356");
-var box = new Rectangle(new Vector(0, 0), new Vector(2, 3), 20, 20, "#3AC3D6")
 
+var ball = new Circle(10, new Vector(240, 160), "#D22356");
+var box = new Rectangle(new Vector(0, 0), 20, 20, "#3AC3D6")
+
+var objects = [];
+var i;
+for(i = 0; i < 10; i++){
+        objects.push(new Circle(10,new Vector(Math.random()*1000,Math.random() * 1000),randomColor()));
+}
 function draw() {
     ctx.clearRect(0, 0, game.width, game.height);
     ball.loop();
     box.loop();
+    for (i = 0; i < 10; i++){
+        objects[i].loop();
+    }
 }
 
+function randomColor(){
+
+    //I found this function after I tried to figure out how to do it myself.
+    //Source is https://www.paulirish.com/2009/random-hex-color-code-snippets/
+    //This will also be included in a notes page
+    return '#' + Math.floor(Math.random()*16777215).toString(16);
+}
 setInterval(draw, 10);
 
 function updateTarget(event) {
@@ -201,6 +216,10 @@ function updateTarget(event) {
     var point = new Vector(event.clientX - rect.left, event.clientY - rect.top);
     ball.newTarget(point);
     box.newTarget(point);
+    var j;
+    for(j = 0; j < 10; j++){
+        objects[j].newTarget(point);
+    }
 }
 
 function vectorSub(e, f) {

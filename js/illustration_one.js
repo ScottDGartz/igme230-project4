@@ -5,9 +5,9 @@ var ctx = game.getContext("2d");
 //class declarations
 class Circle {
     //Radius num, location vector, velocity vector and fill color
-    constructor(radius, loc, velocity, fill) {
+    constructor(radius, loc, fill) {
         this.loc = loc;
-        this.velo = velocity;
+        this.velo = new Vector(0,0);
         this.radius = radius;
         this.fill = fill;
         //Sets the starting target to center of the canvas
@@ -58,15 +58,15 @@ class Circle {
 class Rectangle {
     //Takes a location vector, velocity vector,
     //width, height, and a fill color
-    constructor(loc, velocity, w, h, fill) {
+    constructor(loc, w, h, fill) {
         this.loc = loc;
-        this.velo = velocity;
+        this.velo = new Vector(0,0);
         this.width = w;
         this.height = h;
         this.fill = fill;
         //Target is set to middle of canvas to start
         this.target = new Vector(game.width/2, game.height/2);
-        this.maxSpeed = 5;
+        this.maxSpeed = 8;
     }
     //Calls all necessary functions in correct order
     loop() {
@@ -172,8 +172,8 @@ class Vector {
 }
 var dx = 2; //Delta x, or change in x position
 var dy = -2;
-var ball = new Circle(10, new Vector(240, 160), new Vector(2, 2), "#D22356");
-var box = new Rectangle(new Vector(0, 0), new Vector(2, 3), 20, 20, "#3AC3D6")
+var ball = new Circle(10, new Vector(240, 160), "#D22356");
+var box = new Rectangle(new Vector(0, 0), 20, 20, "#3AC3D6")
 
 function draw() {
     ctx.clearRect(0, 0, game.width, game.height);
