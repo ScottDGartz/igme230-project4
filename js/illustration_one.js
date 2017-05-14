@@ -4,21 +4,26 @@ var ctx = game.getContext("2d");
 
 //class declarations
 class Circle {
+    //Radius num, location vector, velocity vector and fill color
     constructor(radius, loc, velocity, fill) {
         this.loc = loc;
         this.velo = velocity;
         this.radius = radius;
         this.fill = fill;
+        //Sets the starting target to center of the canvas
         this.target = new Vector(game.width / 2, game.height / 2);
         this.acceleration;
         this.maxSpeed = 5;
     }
+    //Calls all necessary functions in order
     loop() {
         this.update();
         this.wallCollision();
         this.draw();
     }
     update() {
+        //Calculates steering force to the target
+        //And applies it
         this.acceleration = vectorSub(this.loc,this.target);
         this.acceleration.normalize();
         this.acceleration.scaleUp(.1);
@@ -26,6 +31,7 @@ class Circle {
         this.velo.limit(this.maxSpeed);
         this.loc.add(this.velo);
     }
+    //Draws the circle at it's location
     draw() {
         ctx.beginPath();
         ctx.arc(this.loc.x, this.loc.y, this.radius, 0, Math.PI * 2);
@@ -33,6 +39,7 @@ class Circle {
         ctx.fill();
         ctx.closePath();
     }
+    //Checks if the circle has hit a wall, if so, it bounces off
     wallCollision() {
         if (this.loc.y < this.radius || this.loc.y > game.height - this.radius) {
             this.velo.y = -this.velo.y;
@@ -41,6 +48,7 @@ class Circle {
             this.velo.x = -this.velo.x;
         }
     }
+    //Sets the circle's target to a new point
     newTarget(vector) {
         this.target = vector;
     }
@@ -48,22 +56,27 @@ class Circle {
 }
 
 class Rectangle {
+    //Takes a location vector, velocity vector,
+    //width, height, and a fill color
     constructor(loc, velocity, w, h, fill) {
         this.loc = loc;
         this.velo = velocity;
         this.width = w;
         this.height = h;
         this.fill = fill;
+        //Target is set to middle of canvas to start
         this.target = new Vector(game.width/2, game.height/2);
         this.maxSpeed = 5;
     }
-
+    //Calls all necessary functions in correct order
     loop() {
         this.update();
         this.wallCollision();
         this.draw();
     }
 
+    //Calculates the steering force on the rectangle
+    //and applies it
     update() {
         this.accel = vectorSub(this.loc,this.target);
         this.accel.normalize();
@@ -73,6 +86,7 @@ class Rectangle {
         this.loc.add(this.velo);
     }
 
+    //Draws rectangle at the right location
     draw() {
         ctx.beginPath();
         ctx.rect(this.loc.x, this.loc.y, this.width, this.height);
@@ -82,6 +96,7 @@ class Rectangle {
 
     }
 
+    //Checks if the rectangle has hit a wall, if so, wraps to the other side
     wallCollision() {
 
         if (this.loc.x > game.width) {
@@ -97,11 +112,14 @@ class Rectangle {
         }
     }
 
+    //Sets rectangle's target to a new spot
     newTarget(b) {
         this.target = b;
     }
 }
 
+//Class to represent x and y coordinates
+//Can be a point, a direction vector, velocity, acceleration, anything really.
 class Vector {
     constructor(x, y) {
         this.x = x;
@@ -109,6 +127,7 @@ class Vector {
         this.calcMag();
     }
 
+    //A bunch of helper functions for vector math
     subtract(b) {
         this.x = this.x - b.x;
         this.y = this.y - b.y;
