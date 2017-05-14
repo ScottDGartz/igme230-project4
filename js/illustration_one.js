@@ -34,9 +34,10 @@ class Circle {
             this.dx = -this.dx;
         }
     }
-    newTarget(x, y) {
-        this.x = x;
-        this.y = y;
+    newTarget(point) {
+        this.x = point.x;
+        this.y = point.y;
+
     }
 
 }
@@ -74,8 +75,8 @@ class Rectangle {
     }
 }
 
-class Point{
-    constructor(x,y){
+class Point {
+    constructor(x, y) {
         this.x = x;
         this.y = y;
     }
@@ -95,7 +96,6 @@ setInterval(draw, 10);
 
 function updateTarget(event) {
     var rect = game.getBoundingClientRect();
-    var x = event.clientX - rect.left;
-    var y = event.clientY - rect.top;
-    ball.newTarget(x, y);
+    var point = new Point(event.clientX - rect.left, event.clientY - rect.top);
+    ball.newTarget(point);
 }
