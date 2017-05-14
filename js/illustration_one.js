@@ -13,6 +13,7 @@ class Circle {
         this.fill = fill;
         this.targetX;
         this.targetY;
+
     }
 
     draw() {
@@ -34,10 +35,10 @@ class Circle {
         }
     }
     newTarget(x, y) {
-        this.targetX = x;
-        this.targetY = y;
-
+        this.x = x;
+        this.y = y;
     }
+
 }
 
 class Rectangle {
@@ -73,6 +74,12 @@ class Rectangle {
     }
 }
 
+class Point{
+    constructor(x,y){
+        this.x = x;
+        this.y = y;
+    }
+}
 var dx = 2; //Delta x, or change in x position
 var dy = -2;
 var ball = new Circle(10, 240, 160, 2, 2, "#D22356");
