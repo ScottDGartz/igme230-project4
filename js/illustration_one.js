@@ -9,16 +9,17 @@ class Circle {
         this.velo = velocity;
         this.radius = radius;
         this.fill = fill;
-        this.targetX;
-        this.targetY;
-
+        this.acceleration = new Vector(.001,-.01);
+        this.maxSpeed = 5;
     }
     loop() {
         this.update();
         this.wallCollision();
         this.draw();
     }
-    update(){
+    update() {
+        this.velo.add(this.acceleration);
+        this.velo.limit(this.maxSpeed);
         this.loc.add(this.velo);
     }
     draw() {
@@ -51,15 +52,22 @@ class Rectangle {
         this.width = w;
         this.height = h;
         this.fill = fill;
+        this.accel = new Vector(-.001, 0.01);
+        this.maxSpeed = 5;
     }
-    loop(){
+
+    loop() {
         this.update();
         this.wallCollision();
         this.draw();
     }
-    update(){
+
+    update() {
+        this.velo.add(this.accel);
+        this.velo.limit(this.maxSpeed);
         this.loc.add(this.velo);
     }
+
     draw() {
         ctx.beginPath();
         ctx.rect(this.loc.x, this.loc.y, this.width, this.height);
@@ -68,20 +76,22 @@ class Rectangle {
         ctx.closePath();
 
     }
+
     wallCollision() {
-        if(this.loc.x > game.width){
+
+        if (this.loc.x > game.width) {
             this.loc.x = 0;
-        }
-        else if(this.loc.x < 0){
+        } else if (this.loc.x < 0) {
             this.loc.x = game.width;
         }
-        if(this.loc.y > game.height){
+
+        if (this.loc.y > game.height) {
             this.loc.y = 0;
-        }
-        else if(this.loc.y < 0){
+        } else if (this.loc.y < 0) {
             this.loc.y = game.height;
         }
     }
+
     newTarget(b) {
 
     }
@@ -93,32 +103,45 @@ class Vector {
         this.y = y;
         this.calcMag();
     }
+
     subtract(b) {
         this.x = this.x - b.x;
         this.y = this.y - b.y;
         this.calcMag();
     }
+
     add(b) {
         this.x = this.x + b.x;
         this.y = this.y + b.y;
         this.calcMag();
     }
+
     scaleUp(n) {
         this.x = this.x * n;
         this.y = this.y * n;
         this.calcMag();
     }
+
     scaleDown(n) {
-        this.x = this.x * n;
-        this.y = this.y * n;
+        this.x = this.x / n;
+        this.y = this.y / n;
         this.calcMag();
     }
+
     calcMag() {
         this.magnitude = Math.sqrt(this.x * this.x + this.y * this.y);
     }
+
     normalize() {
         if (this.magnitude != 0) {
             this.scaleDown(this.magnitude);
+        }
+    }
+
+    limit(max) {
+        if (this.magnitude > max) {
+            this.normalize();
+            this.scaleUp(max);
         }
     }
 }
