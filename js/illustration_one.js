@@ -13,15 +13,20 @@ class Circle {
         this.targetY;
 
     }
-
+    loop() {
+        this.update();
+        this.wallCollision();
+        this.draw();
+    }
+    update(){
+        this.loc.add(this.velo);
+    }
     draw() {
         ctx.beginPath();
         ctx.arc(this.loc.x, this.loc.y, this.radius, 0, Math.PI * 2);
         ctx.fillStyle = this.fill;
         ctx.fill();
         ctx.closePath();
-        this.wallCollision();
-        this.loc.add(this.velo);
     }
     wallCollision() {
         if (this.loc.y < this.radius || this.loc.y > game.height - this.radius) {
@@ -47,14 +52,21 @@ class Rectangle {
         this.height = h;
         this.fill = fill;
     }
+    loop(){
+        this.update();
+        this.wallCollision();
+        this.draw();
+    }
+    update(){
+        this.loc.add(this.velo);
+    }
     draw() {
         ctx.beginPath();
         ctx.rect(this.loc.x, this.loc.y, this.width, this.height);
         ctx.fillStyle = this.fill;
         ctx.fill();
         ctx.closePath();
-        this.wallCollision();
-        this.loc.add(this.velo);
+
     }
     wallCollision() {
         if(this.loc.x > game.width){
@@ -117,8 +129,8 @@ var rect = new Rectangle(new Vector(0, 0), new Vector(2, 3), 20, 20, "#3AC3D6")
 
 function draw() {
     ctx.clearRect(0, 0, game.width, game.height);
-    ball.draw();
-    rect.draw();
+    ball.loop();
+    rect.loop();
 }
 
 setInterval(draw, 10);
