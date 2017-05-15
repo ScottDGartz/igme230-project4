@@ -135,7 +135,9 @@ class Triangle{
         this.maxSpeed = maxSpeed;
     }
     update(){
-
+        this.p1 = rotatePoint(this.p1,1);
+        this.p2 = rotatePoint(this.p2,1);
+        this.p3 = rotatePoint(this.p3,1);
     }
     loop(){
         this.update();
@@ -155,9 +157,6 @@ class Triangle{
         ctx.fill();
     }
     wallCollision(){
-
-    }
-    rotatePoint(){
 
     }
 
@@ -288,4 +287,9 @@ function createNode(event) {
 }
 function toRadians(angle){
     return angle * (Math.PI / 180);
+}
+function rotatePoint(point,angle){
+    var xprime = (point.x * Math.cos(toRadians(angle))) - (point.y * Math.sin(toRadians(angle)));
+    var yprime = (point.y * Math.cos(toRadians(angle))) + (point.x * Math.sin(toRadians(angle)));
+    return new Vector(xprime, yprime);
 }
