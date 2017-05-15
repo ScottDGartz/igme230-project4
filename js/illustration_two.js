@@ -130,7 +130,7 @@ class Triangle{
         this.p1 = loc;
         this.p2 = new Vector(loc.x, loc.y + size);
         this.p3 = new Vector(this.p2.x + size, this.p2.y);
-        this.velocity = new Vector(1,-.1);
+        this.velocity = new Vector(1,-1);
         this.size = size;
         this.fill = fill;
         this.maxSpeed = maxSpeed;
@@ -164,8 +164,41 @@ class Triangle{
         ctx.fill();
     }
     wallCollision(){
+        var p2change = new Vector(this.p1.x, this.p1.y);
+        var p3change = new Vector(this.p1.x, this.p1.y);
+        p2change.subtract(this.p2);
+        p3change.subtract(this.p3);
+        if (this.p1.x > game.width) {
+            this.p1.x = 0;
+            this.p2 = new Vector(this.p1.x,this.p1.y);
+            this.p2.add(p2change);
+            this.p3 = new Vector(this.p1.x, this.p1.y);
+            this.p3.add(p3change);
+        } else if (this.p1.x < 0) {
+            this.p1.x = game.width;
 
+            this.p2 = new Vector(this.p1.x,this.p1.y);
+            this.p2.add(p2change);
+            this.p3 = new Vector(this.p1.x, this.p1.y);
+            this.p3.add(p3change);
+        }
+        if (this.p1.y > game.height) {
+            this.p1.y = 0;
+
+            this.p2 = new Vector(this.p1.x,this.p1.y);
+            this.p2.add(p2change);
+            this.p3 = new Vector(this.p1.x, this.p1.y);
+            this.p3.add(p3change);
+        } else if (this.p1.y < 0) {
+            this.p1.y = game.height;
+
+            this.p2 = new Vector(this.p1.x,this.p1.y);
+            this.p2.add(p2change);
+            this.p3 = new Vector(this.p1.x, this.p1.y);
+            this.p3.add(p3change);
+        }
     }
+
     calcCenter(){
         this.center = new Vector((this.p1.x + this.p2.x + this.p3.x)/3,(this.p1.y + this.p2.y + this.p3.y)/3);
     }
