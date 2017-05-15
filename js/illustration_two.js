@@ -5,6 +5,7 @@ var ctx = game.getContext("2d");
 
 //class declarations
 class Circle {
+
     //Radius num, location vector, velocity vector and fill color
     constructor(radius, loc, fill, maxSpeed) {
         this.loc = loc;
@@ -15,20 +16,23 @@ class Circle {
         this.target = new Vector(game.width / 2, game.height / 2);
         this.acceleration;
         this.maxSpeed = maxSpeed;
-        while(this.fill == "#ffffff" || this.fill == "#000000"){
+
+        //Just to make sure the circle's colour isn't black or white
+        while (this.fill == "#ffffff" || this.fill == "#000000") {
             this.fill = randomColor();
         }
-        //Target is set to mid
     }
+
     //Calls all necessary functions in order
     loop() {
         this.update();
         this.wallCollision();
         this.draw();
     }
+
+    //Calculates steering force to the target
+    //And applies it
     update() {
-        //Calculates steering force to the target
-        //And applies it
         this.acceleration = vectorSub(this.loc, this.target);
         this.acceleration.normalize();
         this.acceleration.scaleUp(.1);
@@ -36,6 +40,7 @@ class Circle {
         this.velo.limit(this.maxSpeed);
         this.loc.add(this.velo);
     }
+
     //Draws the circle at it's location
     draw() {
         ctx.beginPath();
@@ -70,18 +75,22 @@ class Rectangle {
         this.width = w;
         this.height = h;
         this.fill = fill;
-        while(this.fill == "#ffffff" || this.fill == "#000000"){
+
+        //Just makes sure the rectangles colour isn't black or white
+        while (this.fill == "#ffffff" || this.fill == "#000000") {
             this.fill = randomColor();
         }
+
         //Target is set to middle of canvas to start
         this.target = new Vector(game.width / 2, game.height / 2);
         this.maxSpeed = maxSpeed;
     }
+
     //Calls all necessary functions in correct order
     loop() {
         this.update();
         this.wallCollision();
-        if(nodes.length > 0){
+        if (nodes.length > 0) {
             this.checkNodes();
         }
         this.draw();
@@ -90,7 +99,6 @@ class Rectangle {
     //Calculates the steering force on the rectangle
     //and applies it
     update() {
-        //        if(node)
         this.accel = vectorSub(this.loc, this.target);
         this.accel.normalize();
         this.accel.scaleUp(.1);
@@ -106,7 +114,6 @@ class Rectangle {
         ctx.fillStyle = this.fill;
         ctx.fill();
         ctx.closePath();
-
     }
 
     //Checks if the rectangle has hit a wall, if so, wraps to the other side
@@ -124,61 +131,69 @@ class Rectangle {
             this.loc.y = game.height;
         }
     }
-    checkNodes(){
-        if(this.loc.x < nodes[this.i].loc.x + nodes[this.i].radius && this.loc.x > nodes[this.i].loc.x - nodes[this.i].radius &&
-          this.loc.y < nodes[this.i].loc.y + nodes[this.i].radius &&
-           this.loc.y > nodes[this.i].loc.y - nodes[this.i].radius){
+
+    //Checks for collision between this rectangle and the current node it is seeking. If there's a collision, it's target gets updated to the next node
+    checkNodes() {
+        if (this.loc.x < nodes[this.i].loc.x + nodes[this.i].radius && this.loc.x > nodes[this.i].loc.x - nodes[this.i].radius &&
+            this.loc.y < nodes[this.i].loc.y + nodes[this.i].radius &&
+            this.loc.y > nodes[this.i].loc.y - nodes[this.i].radius) {
             this.i++;
-            if(this.i < nodes.length){
+            if (this.i < nodes.length) {
                 this.target = nodes[this.i].loc;
-            }
-            else{
+            } else {
                 this.i = 0;
                 this.target = nodes[this.i].loc;
             }
         }
     }
+
     //Sets rectangle's target to a new spot
     newTarget(b) {
-        if(nodes.length == 0){
+        if (nodes.length == 0) {
             this.target = b;
-        }
-        else{
+        } else {
             this.target = nodes[this.i].loc;
         }
     }
 }
 
-class Triangle{
-    constructor(loc,size,fill,maxSpeed){
+class Triangle {
+    constructor(loc, size, fill, maxSpeed) {
         this.p1 = loc;
         this.p2 = new Vector(loc.x, loc.y + size);
         this.p3 = new Vector(this.p2.x + size, this.p2.y);
-        this.velocity = new Vector(1,-1);
+        this.velocity = new Vector(1, -1);
         this.size = size;
         this.fill = fill;
         this.maxSpeed = maxSpeed;
         this.center;
         this.calcCenter();
     }
-    update(){
+
+    //Moves all points
+    //Rotates the points after moving.
+    update() {
         this.p1.add(this.velocity);
         this.p2.add(this.velocity);
         this.p3.add(this.velocity);
-        this.p1 = rotatePoint(this.p1,1,this.center);
-        this.p2 = rotatePoint(this.p2,1,this.center);
-        this.p3 = rotatePoint(this.p3,1,this.center);
+        this.p1 = rotatePoint(this.p1, 1, this.center);
+        this.p2 = rotatePoint(this.p2, 1, this.center);
+        this.p3 = rotatePoint(this.p3, 1, this.center);
         this.calcCenter();
     }
-    loop(){
+
+    //Calls all needed functions
+    loop() {
         this.update();
         this.wallCollision();
         this.draw();
     }
-    draw(){
+
+    //Draws the triangle
+    draw() {
         ctx.beginPath();
         ctx.moveTo(this.p1.x, this.p1.y);
-        ctx.lineTo(this.p2.x,this.p2.y);
+        ctx.lineTo(this.p2.x, this.p2.y);
         ctx.lineTo(this.p3.x, this.p3.y);
         ctx.closePath();
         ctx.lineWidth = 10;
@@ -187,21 +202,23 @@ class Triangle{
         ctx.fillStyle = this.fill;
         ctx.fill();
     }
-    wallCollision(){
+
+    //Checks if all points of a triangle are past the walls, and wraps
+    wallCollision() {
         var p2change = new Vector(this.p1.x, this.p1.y);
         var p3change = new Vector(this.p1.x, this.p1.y);
         p2change.subtract(this.p2);
         p3change.subtract(this.p3);
         if (this.p1.x > game.width && this.p2.x > game.width && this.p3.x > game.width) {
             this.p1.x = 0;
-            this.p2 = new Vector(this.p1.x,this.p1.y);
+            this.p2 = new Vector(this.p1.x, this.p1.y);
             this.p2.add(p2change);
             this.p3 = new Vector(this.p1.x, this.p1.y);
             this.p3.add(p3change);
         } else if (this.p1.x < 0 && this.p2.x < 0 && this.p3.x < 0) {
             this.p1.x = game.width;
 
-            this.p2 = new Vector(this.p1.x,this.p1.y);
+            this.p2 = new Vector(this.p1.x, this.p1.y);
             this.p2.add(p2change);
             this.p3 = new Vector(this.p1.x, this.p1.y);
             this.p3.add(p3change);
@@ -209,24 +226,27 @@ class Triangle{
         if (this.p1.y > game.height && this.p2.y > game.height && this.p3.y > game.height) {
             this.p1.y = 0;
 
-            this.p2 = new Vector(this.p1.x,this.p1.y);
+            this.p2 = new Vector(this.p1.x, this.p1.y);
             this.p2.add(p2change);
             this.p3 = new Vector(this.p1.x, this.p1.y);
             this.p3.add(p3change);
         } else if (this.p1.y < 0 && this.p2.y < 0 && this.p3.y < 0) {
             this.p1.y = game.height;
 
-            this.p2 = new Vector(this.p1.x,this.p1.y);
+            this.p2 = new Vector(this.p1.x, this.p1.y);
             this.p2.add(p2change);
             this.p3 = new Vector(this.p1.x, this.p1.y);
             this.p3.add(p3change);
         }
     }
 
-    calcCenter(){
-        this.center = new Vector((this.p1.x + this.p2.x + this.p3.x)/3,(this.p1.y + this.p2.y + this.p3.y)/3);
+    //Calculates the center of the triangle
+    calcCenter() {
+        this.center = new Vector((this.p1.x + this.p2.x + this.p3.x) / 3, (this.p1.y + this.p2.y + this.p3.y) / 3);
     }
-    newTarget(){
+
+    //Useless function so no errors are thrown
+    newTarget() {
         //This is literally so it doesn't throw an error...
     }
 }
@@ -237,6 +257,8 @@ class Node {
         this.stroke = "#275c8d";
         this.radius = 15;
     }
+
+    //Draws the node
     draw() {
         ctx.beginPath();
         ctx.arc(this.loc.x, this.loc.y, this.radius, 0, Math.PI * 2);
@@ -307,15 +329,20 @@ var objects = [];
 var nodes = [];
 var i;
 var objCount = 50;
-for (i = 0; i < objCount; i++) {
-    objects.push(new Triangle(new Vector(Math.random()*1000, Math.random() * 1000),10,"#ffffff",Math.random()*4));
 
-        if (i % 2 == 0) {
+
+for (i = 0; i < objCount; i++) {
+
+    objects.push(new Triangle(new Vector(Math.random() * 1000, Math.random() * 1000), 10, "#ffffff", Math.random() * 4));
+
+    if (i % 2 == 0) {
         objects.push(new Circle(10, new Vector(Math.random() * 1000, Math.random() * 1000), randomColor(), Math.random() * 3));
     } else {
         objects.push(new Rectangle(new Vector(Math.random() * 1000, Math.random() * 1000), 20, 20, randomColor(), Math.random() * 3));
     }
 }
+
+//Loops all functions and draws all nodes
 function draw() {
     ctx.clearRect(0, 0, game.width, game.height);
 
@@ -325,7 +352,8 @@ function draw() {
     for (i = 0; i < nodes.length; i++) {
         nodes[i].draw();
     }
-    }
+}
+
 
 function randomColor() {
 
@@ -336,6 +364,7 @@ function randomColor() {
 }
 setInterval(draw, 10);
 
+//Called whenever the mouse moves to change the target for shapes
 function updateTarget(event) {
     var rect = game.getBoundingClientRect();
     var point = new Vector(event.clientX - rect.left, event.clientY - rect.top);
@@ -346,22 +375,26 @@ function updateTarget(event) {
     }
 }
 
+//Helped function for vector subtraction that returns a vector
 function vectorSub(e, f) {
     return new Vector(f.x - e.x, f.y - e.y)
 }
 
+//Called when mouse clicks, creates a node
 function createNode(event) {
     var rect = game.getBoundingClientRect();
     var point = new Vector(event.clientX - rect.left, event.clientY - rect.top)
     nodes.push(new Node(point));
 }
 
-function toRadians(angle){
+//Converts degrees to radians
+function toRadians(angle) {
     return angle * (Math.PI / 180);
 }
 
-function rotatePoint(point,angle,center){
-    var xprime = ((point.x - center.x) * Math.cos(toRadians(angle))) - ((point.y - center.y)* Math.sin(toRadians(angle)));
+//Function to rotate a point a certain angle, around the provided center point
+function rotatePoint(point, angle, center) {
+    var xprime = ((point.x - center.x) * Math.cos(toRadians(angle))) - ((point.y - center.y) * Math.sin(toRadians(angle)));
     var yprime = ((point.y - center.y) * Math.cos(toRadians(angle))) + ((point.x - center.x) * Math.sin(toRadians(angle)));
     return new Vector(xprime + center.x, yprime + center.y);
 }
