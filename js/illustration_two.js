@@ -8,7 +8,7 @@ class Circle {
     //Radius num, location vector, velocity vector and fill color
     constructor(radius, loc, fill, maxSpeed) {
         this.loc = loc;
-        this.velo = new Vector(0,0);
+        this.velo = new Vector(0, 0);
         this.radius = radius;
         this.fill = fill;
         //Sets the starting target to center of the canvas
@@ -25,7 +25,7 @@ class Circle {
     update() {
         //Calculates steering force to the target
         //And applies it
-        this.acceleration = vectorSub(this.loc,this.target);
+        this.acceleration = vectorSub(this.loc, this.target);
         this.acceleration.normalize();
         this.acceleration.scaleUp(.1);
         this.velo.add(this.acceleration);
@@ -59,14 +59,14 @@ class Circle {
 class Rectangle {
     //Takes a location vector, velocity vector,
     //width, height, and a fill color
-    constructor(loc, w, h, fill,maxSpeed) {
+    constructor(loc, w, h, fill, maxSpeed) {
         this.loc = loc;
         this.velo = new Vector(0, 0);
         this.width = w;
         this.height = h;
         this.fill = fill;
         //Target is set to middle of canvas to start
-        this.target = new Vector(game.width/2, game.height/2);
+        this.target = new Vector(game.width / 2, game.height / 2);
         this.maxSpeed = maxSpeed;
     }
     //Calls all necessary functions in correct order
@@ -79,8 +79,8 @@ class Rectangle {
     //Calculates the steering force on the rectangle
     //and applies it
     update() {
-//        if(node)
-        this.accel = vectorSub(this.loc,this.target);
+        //        if(node)
+        this.accel = vectorSub(this.loc, this.target);
         this.accel.normalize();
         this.accel.scaleUp(.1);
         this.velo.add(this.accel);
@@ -116,17 +116,22 @@ class Rectangle {
 
     //Sets rectangle's target to a new spot
     newTarget(b) {
-        this.target = b;
+        if(nodes.length == 0){
+            this.target = b;
+        }
+        else{
+            this.target = nodes[0].loc;
+        }
     }
 }
 
-class Node{
-    constructor(point){
+class Node {
+    constructor(point) {
         this.loc = point;
         this.fill = "#99ffdd";
         this.stroke = "#275c8d";
     }
-    draw(){
+    draw() {
         ctx.beginPath();
         ctx.arc(this.loc.x, this.loc.y, 15, 0, Math.PI * 2);
         ctx.fillStyle = this.fill;
@@ -195,32 +200,32 @@ class Vector {
 var objects = [];
 var nodes = [];
 var i;
-var objCount = 100;
-for(i = 0; i < objCount; i++){
-    if(i % 2 == 0)
-    {   objects.push(new Circle(10,new Vector(Math.random()*1000,Math.random() * 1000),randomColor(),Math.random()*10));
-    }
-    else{
-        objects.push(new Rectangle(new Vector(Math.random()*1000,Math.random()*1000),20,20,randomColor,Math.random() * 10));
+var objCount = 50;
+for (i = 0; i < objCount; i++) {
+    if (i % 2 == 0) {
+        objects.push(new Circle(10, new Vector(Math.random() * 1000, Math.random() * 1000), randomColor(), Math.random() * 3));
+    } else {
+        objects.push(new Rectangle(new Vector(Math.random() * 1000, Math.random() * 1000), 20, 20, randomColor, Math.random() * 3));
     }
 }
+
 function draw() {
     ctx.clearRect(0, 0, game.width, game.height);
 
-    for (i = 0; i < objects.length; i++){
+    for (i = 0; i < objects.length; i++) {
         objects[i].loop();
     }
-    for(i = 0; i < nodes.length; i++){
+    for (i = 0; i < nodes.length; i++) {
         nodes[i].draw();
     }
 }
 
-function randomColor(){
+function randomColor() {
 
     //I found this function after I tried to figure out how to do it myself.
     //Source is https://www.paulirish.com/2009/random-hex-color-code-snippets/
     //This will also be included in a notes page
-    return '#' + Math.floor(Math.random()*16777215).toString(16);
+    return '#' + Math.floor(Math.random() * 16777215).toString(16);
 }
 setInterval(draw, 10);
 
@@ -229,7 +234,7 @@ function updateTarget(event) {
     var point = new Vector(event.clientX - rect.left, event.clientY - rect.top);
 
     var j;
-    for(j = 0; j < objects.length; j++){
+    for (j = 0; j < objects.length; j++) {
         objects[j].newTarget(point);
     }
 }
@@ -238,8 +243,8 @@ function vectorSub(e, f) {
     return new Vector(f.x - e.x, f.y - e.y)
 }
 
-function createNode(event){
-    var rect= game.getBoundingClientRect();
+function createNode(event) {
+    var rect = game.getBoundingClientRect();
     var point = new Vector(event.clientX - rect.left, event.clientY - rect.top)
     nodes.push(new Node(point));
 }
