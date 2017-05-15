@@ -242,7 +242,7 @@ var objCount = 50;
 //        objects.push(new Rectangle(new Vector(Math.random() * 1000, Math.random() * 1000), 20, 20, randomColor, Math.random() * 3));
 //    }
 //}
-var tri = new Triangle(new Vector(100,100),100,3,3);
+var tri = new Triangle(new Vector(100,100),100,3,3, );
 function draw() {
     ctx.clearRect(0, 0, game.width, game.height);
 
