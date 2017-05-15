@@ -61,6 +61,7 @@ class Rectangle {
     //width, height, and a fill color
     constructor(loc, w, h, fill, maxSpeed) {
         this.loc = loc;
+        this.i = 0;
         this.velo = new Vector(0, 0);
         this.width = w;
         this.height = h;
@@ -120,12 +121,13 @@ class Rectangle {
         if(this.loc.x < nodes[0].x + nodes[0].radius && this.loc.x > nodes[0].x - nodes[0].radius &&
           this.loc.y < nodes[0].y + nodes[0].radius &&
            this.loc.y > nodes[0].y - nodes[0].radius){
-            nodes.shift();
-            if(nodes.length > 0){
-                this.target = nodes[0].loc;
+            this.i++;
+            if(this.i < nodes.length){
+                this.target = nodes[this.i].loc;
             }
             else{
-                this.target = new Vector(0,0);
+                this.i = 0;
+                this.target = nodes[this.i].loc;
             }
         }
     }
