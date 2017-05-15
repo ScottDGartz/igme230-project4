@@ -168,13 +168,13 @@ class Triangle{
         var p3change = new Vector(this.p1.x, this.p1.y);
         p2change.subtract(this.p2);
         p3change.subtract(this.p3);
-        if (this.p1.x > game.width) {
+        if (this.p1.x > game.width && this.p2.x > game.width && this.p3.x > game.width) {
             this.p1.x = 0;
             this.p2 = new Vector(this.p1.x,this.p1.y);
             this.p2.add(p2change);
             this.p3 = new Vector(this.p1.x, this.p1.y);
             this.p3.add(p3change);
-        } else if (this.p1.x < 0) {
+        } else if (this.p1.x < 0 && this.p2.x < 0 && this.p3.x < 0) {
             this.p1.x = game.width;
 
             this.p2 = new Vector(this.p1.x,this.p1.y);
@@ -182,14 +182,14 @@ class Triangle{
             this.p3 = new Vector(this.p1.x, this.p1.y);
             this.p3.add(p3change);
         }
-        if (this.p1.y > game.height) {
+        if (this.p1.y > game.height && this.p2.y > game.height && this.p3.y > game.height) {
             this.p1.y = 0;
 
             this.p2 = new Vector(this.p1.x,this.p1.y);
             this.p2.add(p2change);
             this.p3 = new Vector(this.p1.x, this.p1.y);
             this.p3.add(p3change);
-        } else if (this.p1.y < 0) {
+        } else if (this.p1.y < 0 && this.p2.y < 0 && this.p3.y < 0) {
             this.p1.y = game.height;
 
             this.p2 = new Vector(this.p1.x,this.p1.y);
@@ -202,10 +202,9 @@ class Triangle{
     calcCenter(){
         this.center = new Vector((this.p1.x + this.p2.x + this.p3.x)/3,(this.p1.y + this.p2.y + this.p3.y)/3);
     }
-    updatePoints(){
-
+    newTarget(){
+        //This is literally so it doesn't throw an error...
     }
-
 }
 class Node {
     constructor(point) {
@@ -283,14 +282,16 @@ var objects = [];
 var nodes = [];
 var i;
 var objCount = 50;
-//for (i = 0; i < objCount; i++) {
-//    if (i % 2 == 0) {
-//        objects.push(new Circle(10, new Vector(Math.random() * 1000, Math.random() * 1000), randomColor(), Math.random() * 3));
-//    } else {
-//        objects.push(new Rectangle(new Vector(Math.random() * 1000, Math.random() * 1000), 20, 20, randomColor, Math.random() * 3));
-//    }
-//}
-var tri = new Triangle(new Vector(500,500),100,3,3, );
+for (i = 0; i < objCount; i++) {
+    if(i % 3 == 0){
+        objects.push(new Triangle(new Vector(Math.random()*1000, Math.random() * 1000),10,randomColor(),Math.random()*4));
+    }
+    else if (i % 2 == 0) {
+        objects.push(new Circle(10, new Vector(Math.random() * 1000, Math.random() * 1000), randomColor(), Math.random() * 3));
+    } else {
+        objects.push(new Rectangle(new Vector(Math.random() * 1000, Math.random() * 1000), 20, 20, randomColor, Math.random() * 3));
+    }
+}
 function draw() {
     ctx.clearRect(0, 0, game.width, game.height);
 
@@ -300,8 +301,7 @@ function draw() {
     for (i = 0; i < nodes.length; i++) {
         nodes[i].draw();
     }
-    tri.loop();
-}
+    }
 
 function randomColor() {
 
