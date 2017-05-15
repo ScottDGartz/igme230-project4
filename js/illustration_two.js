@@ -121,14 +121,17 @@ class Rectangle {
 }
 
 class Node{
-    constructor(point,color){
+    constructor(point){
         this.loc = point;
-        this.fill = color;
+        this.fill = "#99ffdd";
+        this.stroke = "#275c8d";
     }
     draw(){
         ctx.beginPath();
-        ctx.arc(this.loc.x, this.loc.y, 7, 0, Math.PI * 2);
+        ctx.arc(this.loc.x, this.loc.y, 15, 0, Math.PI * 2);
         ctx.fillStyle = this.fill;
+        ctx.strokeStyle = this.stroke;
+        ctx.stroke();
         ctx.fill();
         ctx.closePath();
     }
@@ -207,6 +210,9 @@ function draw() {
     for (i = 0; i < objects.length; i++){
         objects[i].loop();
     }
+    for(i = 0; i < nodes.length; i++){
+        nodes[i].draw();
+    }
 }
 
 function randomColor(){
@@ -235,4 +241,5 @@ function vectorSub(e, f) {
 function createNode(event){
     var rect= game.getBoundingClientRect();
     var point = new Vector(event.clientX - rect.left, event.clientY - rect.top)
+    nodes.push(new Node(point));
 }
