@@ -130,6 +130,7 @@ class Triangle{
         this.p1 = loc;
         this.p2 = new Vector(loc.x, loc.y + size);
         this.p3 = new Vector(this.p2.x + size, this.p2.y);
+        this.velocity = new Vector(1,-.1);
         this.size = size;
         this.fill = fill;
         this.maxSpeed = maxSpeed;
@@ -137,6 +138,9 @@ class Triangle{
         this.calcCenter();
     }
     update(){
+        this.p1.add(this.velocity);
+        this.p2.add(this.velocity);
+        this.p3.add(this.velocity);
         this.p1 = rotatePoint(this.p1,1,this.center);
         this.p2 = rotatePoint(this.p2,1,this.center);
         this.p3 = rotatePoint(this.p3,1,this.center);
@@ -164,6 +168,9 @@ class Triangle{
     }
     calcCenter(){
         this.center = new Vector((this.p1.x + this.p2.x + this.p3.x)/3,(this.p1.y + this.p2.y + this.p3.y)/3);
+    }
+    updatePoints(){
+
     }
 
 }
@@ -250,7 +257,7 @@ var objCount = 50;
 //        objects.push(new Rectangle(new Vector(Math.random() * 1000, Math.random() * 1000), 20, 20, randomColor, Math.random() * 3));
 //    }
 //}
-var tri = new Triangle(new Vector(100,100),100,3,3, );
+var tri = new Triangle(new Vector(500,500),100,3,3, );
 function draw() {
     ctx.clearRect(0, 0, game.width, game.height);
 
