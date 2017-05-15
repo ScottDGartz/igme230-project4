@@ -118,9 +118,9 @@ class Rectangle {
         }
     }
     checkNodes(){
-        if(this.loc.x < nodes[0].x + nodes[0].radius && this.loc.x > nodes[0].x - nodes[0].radius &&
-          this.loc.y < nodes[0].y + nodes[0].radius &&
-           this.loc.y > nodes[0].y - nodes[0].radius){
+        if(this.loc.x < nodes[this.i].loc.x + nodes[this.i].radius && this.loc.x > nodes[this.i].loc.x - nodes[this.i].radius &&
+          this.loc.y < nodes[this.i].loc.y + nodes[this.i].radius &&
+           this.loc.y > nodes[this.i].loc.y - nodes[this.i].radius){
             this.i++;
             if(this.i < nodes.length){
                 this.target = nodes[this.i].loc;
@@ -228,10 +228,11 @@ class Node {
         this.loc = point;
         this.fill = "#99ffdd";
         this.stroke = "#275c8d";
+        this.radius = 15;
     }
     draw() {
         ctx.beginPath();
-        ctx.arc(this.loc.x, this.loc.y, 15, 0, Math.PI * 2);
+        ctx.arc(this.loc.x, this.loc.y, this.radius, 0, Math.PI * 2);
         ctx.fillStyle = this.fill;
         ctx.strokeStyle = this.stroke;
         ctx.stroke();
