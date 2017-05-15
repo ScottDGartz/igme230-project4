@@ -157,6 +157,9 @@ class Triangle{
     wallCollision(){
 
     }
+    rotatePoint(){
+
+    }
 
 }
 class Node {
@@ -282,4 +285,7 @@ function createNode(event) {
     var rect = game.getBoundingClientRect();
     var point = new Vector(event.clientX - rect.left, event.clientY - rect.top)
     nodes.push(new Node(point));
+}
+function toRadians(angle){
+    return angle * (Math.PI / 180);
 }
