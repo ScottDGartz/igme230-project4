@@ -15,6 +15,10 @@ class Circle {
         this.target = new Vector(game.width / 2, game.height / 2);
         this.acceleration;
         this.maxSpeed = maxSpeed;
+        while(this.fill == "#ffffff" || this.fill == "#000000"){
+            this.fill = randomColor();
+        }
+        //Target is set to mid
     }
     //Calls all necessary functions in order
     loop() {
@@ -66,6 +70,9 @@ class Rectangle {
         this.width = w;
         this.height = h;
         this.fill = fill;
+        while(this.fill == "#ffffff" || this.fill == "#000000"){
+            this.fill = randomColor();
+        }
         //Target is set to middle of canvas to start
         this.target = new Vector(game.width / 2, game.height / 2);
         this.maxSpeed = maxSpeed;
@@ -137,7 +144,7 @@ class Rectangle {
             this.target = b;
         }
         else{
-            this.target = nodes[0].loc;
+            this.target = nodes[this.i].loc;
         }
     }
 }
@@ -177,7 +184,7 @@ class Triangle{
         ctx.lineWidth = 10;
         ctx.strokeStyle = "#666666"
         ctx.stroke;
-        ctx.fillStyle = "#FFCC00";
+        ctx.fillStyle = this.fill;
         ctx.fill();
     }
     wallCollision(){
@@ -301,13 +308,12 @@ var nodes = [];
 var i;
 var objCount = 50;
 for (i = 0; i < objCount; i++) {
-    if(i % 3 == 0){
-        objects.push(new Triangle(new Vector(Math.random()*1000, Math.random() * 1000),10,randomColor(),Math.random()*4));
-    }
-    else if (i % 2 == 0) {
+    objects.push(new Triangle(new Vector(Math.random()*1000, Math.random() * 1000),10,"#ffffff",Math.random()*4));
+
+        if (i % 2 == 0) {
         objects.push(new Circle(10, new Vector(Math.random() * 1000, Math.random() * 1000), randomColor(), Math.random() * 3));
     } else {
-        objects.push(new Rectangle(new Vector(Math.random() * 1000, Math.random() * 1000), 20, 20, randomColor, Math.random() * 3));
+        objects.push(new Rectangle(new Vector(Math.random() * 1000, Math.random() * 1000), 20, 20, randomColor(), Math.random() * 3));
     }
 }
 function draw() {
