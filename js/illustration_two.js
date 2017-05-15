@@ -291,9 +291,11 @@ function createNode(event) {
     var point = new Vector(event.clientX - rect.left, event.clientY - rect.top)
     nodes.push(new Node(point));
 }
+
 function toRadians(angle){
     return angle * (Math.PI / 180);
 }
+
 function rotatePoint(point,angle,center){
     var xprime = ((point.x - center.x) * Math.cos(toRadians(angle))) - ((point.y - center.y)* Math.sin(toRadians(angle)));
     var yprime = ((point.y - center.y) * Math.cos(toRadians(angle))) + ((point.x - center.x) * Math.sin(toRadians(angle)));
