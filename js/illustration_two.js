@@ -73,6 +73,9 @@ class Rectangle {
     loop() {
         this.update();
         this.wallCollision();
+        if(nodes.length > 0){
+            this.checkNodes();
+        }
         this.draw();
     }
 
@@ -113,7 +116,19 @@ class Rectangle {
             this.loc.y = game.height;
         }
     }
-
+    checkNodes(){
+        if(this.loc.x < nodes[0].x + nodes[0].radius && this.loc.x > nodes[0].x - nodes[0].radius &&
+          this.loc.y < nodes[0].y + nodes[0].radius &&
+           this.loc.y > nodes[0].y - nodes[0].radius){
+            nodes.shift();
+            if(nodes.length > 0){
+                this.target = nodes[0].loc;
+            }
+            else{
+                this.target = new Vector(0,0);
+            }
+        }
+    }
     //Sets rectangle's target to a new spot
     newTarget(b) {
         if(nodes.length == 0){
