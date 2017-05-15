@@ -133,11 +133,14 @@ class Triangle{
         this.size = size;
         this.fill = fill;
         this.maxSpeed = maxSpeed;
+        this.center;
+        this.calcCenter();
     }
     update(){
-        this.p1 = rotatePoint(this.p1,1);
-        this.p2 = rotatePoint(this.p2,1);
-        this.p3 = rotatePoint(this.p3,1);
+        this.p1 = rotatePoint(this.p1,1,this.center);
+        this.p2 = rotatePoint(this.p2,1,this.center);
+        this.p3 = rotatePoint(this.p3,1,this.center);
+        this.calcCenter();
     }
     loop(){
         this.update();
@@ -158,6 +161,9 @@ class Triangle{
     }
     wallCollision(){
 
+    }
+    calcCenter(){
+        this.center = new Vector((this.p1.x + this.p2.x + this.p3.x)/3,(this.p1.y + this.p2.y + this.p3.y)/3);
     }
 
 }
@@ -288,8 +294,8 @@ function createNode(event) {
 function toRadians(angle){
     return angle * (Math.PI / 180);
 }
-function rotatePoint(point,angle){
-    var xprime = (point.x * Math.cos(toRadians(angle))) - (point.y * Math.sin(toRadians(angle)));
-    var yprime = (point.y * Math.cos(toRadians(angle))) + (point.x * Math.sin(toRadians(angle)));
-    return new Vector(xprime, yprime);
+function rotatePoint(point,angle,center){
+    var xprime = ((point.x - center.x) * Math.cos(toRadians(angle))) - ((point.y - center.y)* Math.sin(toRadians(angle)));
+    var yprime = ((point.y - center.y) * Math.cos(toRadians(angle))) + ((point.x - center.x) * Math.sin(toRadians(angle)));
+    return new Vector(xprime + center.x, yprime + center.y);
 }
