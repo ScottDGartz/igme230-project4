@@ -125,6 +125,40 @@ class Rectangle {
     }
 }
 
+class Triangle{
+    constructor(loc,size,fill,maxSpeed){
+        this.p1 = loc;
+        this.p2 = new Vector(loc.x, loc.y + size);
+        this.p3 = new Vector(this.p2.x + size, this.p2.y);
+        this.size = size;
+        this.fill = fill;
+        this.maxSpeed = maxSpeed;
+    }
+    update(){
+
+    }
+    loop(){
+        this.update();
+        this.wallCollision();
+        this.draw();
+    }
+    draw(){
+        ctx.beginPath();
+        ctx.moveTo(this.p1.x, this.p1.y);
+        ctx.lineTo(this.p2.x,this.p2.y);
+        ctx.lineTo(this.p3.x, this.p3.y);
+        ctx.closePath();
+        ctx.lineWidth = 10;
+        ctx.strokeStyle = "#666666"
+        ctx.stroke;
+        ctx.fillStyle = "#FFCC00";
+        ctx.fill();
+    }
+    wallCollision(){
+
+    }
+
+}
 class Node {
     constructor(point) {
         this.loc = point;
@@ -201,14 +235,14 @@ var objects = [];
 var nodes = [];
 var i;
 var objCount = 50;
-for (i = 0; i < objCount; i++) {
-    if (i % 2 == 0) {
-        objects.push(new Circle(10, new Vector(Math.random() * 1000, Math.random() * 1000), randomColor(), Math.random() * 3));
-    } else {
-        objects.push(new Rectangle(new Vector(Math.random() * 1000, Math.random() * 1000), 20, 20, randomColor, Math.random() * 3));
-    }
-}
-
+//for (i = 0; i < objCount; i++) {
+//    if (i % 2 == 0) {
+//        objects.push(new Circle(10, new Vector(Math.random() * 1000, Math.random() * 1000), randomColor(), Math.random() * 3));
+//    } else {
+//        objects.push(new Rectangle(new Vector(Math.random() * 1000, Math.random() * 1000), 20, 20, randomColor, Math.random() * 3));
+//    }
+//}
+var tri = new Triangle(new Vector(100,100),100,3,3);
 function draw() {
     ctx.clearRect(0, 0, game.width, game.height);
 
@@ -218,6 +252,7 @@ function draw() {
     for (i = 0; i < nodes.length; i++) {
         nodes[i].draw();
     }
+    tri.loop();
 }
 
 function randomColor() {
