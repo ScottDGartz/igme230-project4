@@ -1,5 +1,6 @@
 var game = document.getElementById("menu");
 var ctx = game.getContext("2d");
+window.onresize = loopLoc;
 
 //class declarations
 class Triangle {
@@ -186,8 +187,8 @@ class Button {
 var objects = [];
 var i;
 var objCount = 200;
-
-var button = new Button(1, "Illust. 1");
+var buttons = []
+buttons[0] = new Button(1, "Illust. 1");
 for (i = 0; i < objCount; i++) {
 
     objects.push(new Triangle(new Vector(Math.random() * window.innerWidth, Math.random() * window.innerHeight), 10, "#ffffff", Math.random() * 4));
@@ -202,7 +203,7 @@ function draw() {
     for (i = 0; i < objects.length; i++) {
         objects[i].loop();
     }
-    button.draw();
+    buttons[0].draw();
 }
 
 setInterval(draw, 10);
@@ -239,4 +240,10 @@ function newLoc(num) {
             break;
     }
 
+}
+function loopLoc(){
+    var i;
+    for(i = 0; i < buttons.length; i++){
+        buttons[i].updateLoc();
+    }
 }
