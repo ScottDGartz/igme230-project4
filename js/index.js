@@ -174,12 +174,13 @@ class Button {
         ctx.beginPath();
         ctx.font = "30px Arial";
         ctx.fillStyle = "#000000";
-        ctx.fillText("Illust. 1", this.loc.x + (this.loc2.x - this.loc.x) / 4, this.loc.y + (this.loc2.y - this.loc.y) / 1.5);
+        ctx.fillText(this.text, this.loc.x + (this.loc2.x - this.loc.x) / 4, this.loc.y + (this.loc2.y - this.loc.y) / 1.5);
         ctx.closePath();
     }
     updateLoc() {
-        this.loc = newLoc(this.buttonNum);
-        this.loc2 = new Vector(this.loc.x * 3.5, this.loc.y * 1.75);
+        var vects = newLoc(this.buttonNum);
+        this.loc = vects[0];
+        this.loc2 = vects[1];
     }
 
 }
@@ -187,8 +188,11 @@ class Button {
 var objects = [];
 var i;
 var objCount = 200;
-var buttons = []
-buttons[0] = new Button(1, "Illust. 1");
+var buttons =[];
+buttons.push(new Button(1, "Illust. 1"));
+buttons.push(new Button(2, "Illust. 2"));
+buttons.push(new Button(3, "Illust. 3"));
+
 for (i = 0; i < objCount; i++) {
 
     objects.push(new Triangle(new Vector(Math.random() * window.innerWidth, Math.random() * window.innerHeight), 10, "#ffffff", Math.random() * 4));
@@ -203,7 +207,9 @@ function draw() {
     for (i = 0; i < objects.length; i++) {
         objects[i].loop();
     }
-    buttons[0].draw();
+    for (i = 0; i < buttons.length; i++){
+        buttons[i].draw();
+    }
 }
 
 setInterval(draw, 10);
@@ -228,13 +234,22 @@ function rotatePoint(point, angle, center) {
 function newLoc(num) {
     var height = window.innerHeight;
     var width = window.innerWidth;
+    var vects = [];
     switch (num) {
         case 1:
-            return new Vector(width / 2, height / 2);
+            vects.push(new Vector(width -(width*.75), height - height*.8));
+            vects.push(new Vector(width - (width*.25),height - height * .6));
+            return vects;
             break;
         case 2:
+            vects.push(new Vector(width -(width*.75), height - height*.55));
+            vects.push(new Vector(width - (width*.25),height -height * .35));
+            return vects;
             break;
         case 3:
+            vects.push(new Vector(width -(width*.75), height - height*.30));
+            vects.push(new Vector(width - (width*.25),height -height * .1));
+            return vects;
             break;
         default:
             break;
