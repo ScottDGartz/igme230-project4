@@ -271,7 +271,7 @@ class Node {
         ctx.closePath();
     }
     click(mouse){
-        if(Math.sqrt((mouse.x - loc.x)*(mouse.x - loc.x) + (mouse.y - loc.y)*(mouse.y - loc.y)) < this.radius){
+        if(Math.sqrt((mouse.x - this.loc.x)*(mouse.x - this.loc.x) + (mouse.y - this.loc.y)*(mouse.y - this.loc.y)) < this.radius){
             nodes.splice(nodes.indexOf(this),1);
             removed = true;
         }
@@ -429,6 +429,7 @@ function up() {
 //Creates a rectangle or circle based on the current number d
 function create() {
     d++;
+    removed = true;
     if (d % 2 == 0) {
         objects.push(new Circle(10, new Vector(Math.random() * 1000, Math.random() * 1000), randomColor(), Math.random() * 3));
     } else {
