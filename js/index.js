@@ -172,16 +172,19 @@ class Vector {
 
 var objects = [];
 var i;
-var objCount = 50;
+var objCount = 200;
 
 
 for (i = 0; i < objCount; i++) {
 
-    objects.push(new Triangle(new Vector(Math.random() * 1000, Math.random() * 1000), 10, "#ffffff", Math.random() * 4));
+    objects.push(new Triangle(new Vector(Math.random() * window.innerWidth, Math.random() * window.innerHeight), 10, "#ffffff", Math.random() * 4));
 
 }
 //Loops all functions and draws all nodes
 function draw() {
+
+  ctx.canvas.width  = window.innerWidth;
+  ctx.canvas.height = window.innerHeight;
     ctx.clearRect(0, 0, game.width, game.height);
     for (i = 0; i < objects.length; i++) {
         objects[i].loop();
