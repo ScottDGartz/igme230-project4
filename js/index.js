@@ -151,6 +151,7 @@ class Vector {
 class Button {
     constructor(buttonNum, text) {
         this.buttonNum = buttonNum;
+        this.path = path(buttonNum);
         this.updateLoc();
         this.text = text;
         this.fill = "rgba(211,211,211,.8)";
@@ -182,6 +183,11 @@ class Button {
         var vects = newLoc(this.buttonNum);
         this.loc = vects[0];
         this.loc2 = vects[1];
+    }
+    click(mouse){
+        if(mouse.x < this.loc2.x && mouse.x > this.loc.x && mouse.y < this.loc2.y && mouse.y > this.loc.y){
+            window.location.assign(this.path);
+        }
     }
 
 }
@@ -273,4 +279,17 @@ function loopLoc() {
 function updateFont(){
     fontNum = .05 * window.innerHeight;
     font = fontNum.toString() + fontString;
+}
+function checkClick(event){
+    var rect = game.getBoundingClientRect();
+
+    var mouseX = event.clientX;
+    var mouseY = event.clientY;
+
+    for(i = 0; i<buttons.length; i++){
+        buttons[i].click(new Vector(mouseX - rect.left,mouseY - rect.top));
+    }
+}
+function path(buttonNum){
+        return "illustration_"+buttonNum.toString()+".html";
 }
