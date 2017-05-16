@@ -434,7 +434,7 @@ function up() {
 //Creates a rectangle or circle based on the current number d
 function create() {
     d++;
-    removed = false;
+    removed = true;
     if (d % 2 == 0) {
         objects.push(new Circle(10, new Vector(Math.random() * 1000, Math.random() * 1000), randomColor(), Math.random() * 3));
     } else {
