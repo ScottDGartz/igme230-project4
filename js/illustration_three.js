@@ -1,8 +1,8 @@
 var game = document.getElementById("game");
 game.onmousemove = updateTarget;
 game.onclick = createNode;
-game.onmousedown = down();
-game.onmouseup = up();
+game.onmousedown = down;
+game.onmouseup = up;
 var ctx = game.getContext("2d");
 
 //class declarations
