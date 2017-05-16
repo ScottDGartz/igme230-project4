@@ -95,25 +95,6 @@ class Triangle {
         //This is literally so it doesn't throw an error...
     }
 }
-class Node {
-    constructor(point) {
-        this.loc = point;
-        this.fill = "#99ffdd";
-        this.stroke = "#275c8d";
-        this.radius = 15;
-    }
-
-    //Draws the node
-    draw() {
-        ctx.beginPath();
-        ctx.arc(this.loc.x, this.loc.y, this.radius, 0, Math.PI * 2);
-        ctx.fillStyle = this.fill;
-        ctx.strokeStyle = this.stroke;
-        ctx.stroke();
-        ctx.fill();
-        ctx.closePath();
-    }
-}
 
 //Class to represent x and y coordinates
 //Can be a point, a direction vector, velocity, acceleration, anything really.
@@ -168,7 +149,14 @@ class Vector {
 
 }
 
+class Button{
+    constructor(loc,text)
+    {
+        this.loc = loc;
+        this.text = text;
+    }
 
+}
 
 var objects = [];
 var i;
