@@ -1,6 +1,8 @@
 var game = document.getElementById("game");
 game.onmousemove = updateTarget;
 game.onclick = createNode;
+game.onmousedown = down();
+game.onmouseup = up();
 var ctx = game.getContext("2d");
 
 //class declarations
@@ -327,19 +329,14 @@ class Vector {
 
 var objects = [];
 var nodes = [];
-var i;
+var d;
 var objCount = 50;
-
-
-for (i = 0; i < objCount; i++) {
+var mouseD = null;
+for (d = 0; d < objCount; d++) {
 
     objects.push(new Triangle(new Vector(Math.random() * 1000, Math.random() * 1000), 10, "#ffffff", Math.random() * 4));
 
-    if (i % 2 == 0) {
-        objects.push(new Circle(10, new Vector(Math.random() * 1000, Math.random() * 1000), randomColor(), Math.random() * 3));
-    } else {
-        objects.push(new Rectangle(new Vector(Math.random() * 1000, Math.random() * 1000), 20, 20, randomColor(), Math.random() * 3));
-    }
+    create();
 }
 
 //Loops all functions and draws all nodes
@@ -355,46 +352,67 @@ function draw() {
 }
 
 
-function randomColor() {
+    function randomColor() {
 
-    //I found this function after I tried to figure out how to do it myself.
-    //Source is https://www.paulirish.com/2009/random-hex-color-code-snippets/
-    //This will also be included in a notes page
-    return '#' + Math.floor(Math.random() * 16777215).toString(16);
-}
-setInterval(draw, 10);
-
-//Called whenever the mouse moves to change the target for shapes
-function updateTarget(event) {
-    var rect = game.getBoundingClientRect();
-    var point = new Vector(event.clientX - rect.left, event.clientY - rect.top);
-
-    var j;
-    for (j = 0; j < objects.length; j++) {
-        objects[j].newTarget(point);
+        //I found this function after I tried to figure out how to do it myself.
+        //Source is https://www.paulirish.com/2009/random-hex-color-code-snippets/
+        //This will also be included in a notes page
+        return '#' + Math.floor(Math.random() * 16777215).toString(16);
     }
-}
+    setInterval(draw, 10);
 
-//Helped function for vector subtraction that returns a vector
-function vectorSub(e, f) {
-    return new Vector(f.x - e.x, f.y - e.y)
-}
+    //Called whenever the mouse moves to change the target for shapes
+    function updateTarget(event) {
+        var rect = game.getBoundingClientRect();
+        var point = new Vector(event.clientX - rect.left, event.clientY - rect.top);
 
-//Called when mouse clicks, creates a node
-function createNode(event) {
-    var rect = game.getBoundingClientRect();
-    var point = new Vector(event.clientX - rect.left, event.clientY - rect.top)
-    nodes.push(new Node(point));
-}
+        var j;
+        for (j = 0; j < objects.length; j++) {
+            objects[j].newTarget(point);
+        }
+    }
 
-//Converts degrees to radians
-function toRadians(angle) {
-    return angle * (Math.PI / 180);
-}
+    //Helped function for vector subtraction that returns a vector
+    function vectorSub(e, f) {
+        return new Vector(f.x - e.x, f.y - e.y)
+    }
 
-//Function to rotate a point a certain angle, around the provided center point
-function rotatePoint(point, angle, center) {
-    var xprime = ((point.x - center.x) * Math.cos(toRadians(angle))) - ((point.y - center.y) * Math.sin(toRadians(angle)));
-    var yprime = ((point.y - center.y) * Math.cos(toRadians(angle))) + ((point.x - center.x) * Math.sin(toRadians(angle)));
-    return new Vector(xprime + center.x, yprime + center.y);
+    //Called when mouse clicks, creates a node
+    function createNode(event) {
+        var rect = game.getBoundingClientRect();
+        var point = new Vector(event.clientX - rect.left, event.clientY - rect.top)
+        nodes.push(new Node(point));
+    }
+
+    //Converts degrees to radians
+    function toRadians(angle) {
+        return angle * (Math.PI / 180);
+    }
+
+    //Function to rotate a point a certain angle, around the provided center point
+    function rotatePoint(point, angle, center) {
+        var xprime = ((point.x - center.x) * Math.cos(toRadians(angle))) - ((point.y - center.y) * Math.sin(toRadians(angle)));
+        var yprime = ((point.y - center.y) * Math.cos(toRadians(angle))) + ((point.x - center.x) * Math.sin(toRadians(angle)));
+        return new Vector(xprime + center.x, yprime + center.y);
+    }
+
+    function down() {
+        if(mouseD === null){
+            setInterval(create,100);
+        }
+    }
+
+    function up() {
+        if(mouseD!= null){
+            clearInterval(mouseD);
+            mouseD === null;
+        }
+    }
+function create(){
+    d++;
+    if (d % 2 == 0) {
+        objects.push(new Circle(10, new Vector(Math.random() * 1000, Math.random() * 1000), randomColor(), Math.random() * 3));
+    } else {
+        objects.push(new Rectangle(new Vector(Math.random() * 1000, Math.random() * 1000), 20, 20, randomColor(), Math.random() * 3));
+    }
 }
