@@ -2,11 +2,7 @@
 @import url('https://fonts.googleapis.com/css?family=EB+Garamond');
 
 html {
-  background: url("Watercolor.jpg") no-repeat center center fixed;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
+  background-color: darkslategray;
 }
 h1{
 	font-family: 'Rock Salt', cursive;
@@ -75,8 +71,9 @@ h1{
 }
 canvas{
     background: #000;
-    display:block;
     margin:0 auto;
+    display: block;
+    text-align: center;
 }
 @media print{
   .printhide{
