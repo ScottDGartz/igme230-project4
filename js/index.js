@@ -146,26 +146,25 @@ class Vector {
 
 }
 
-class Button{
-    constructor(buttonNum,text)
-    {
-        this.loc = loc;
-        this.loc2 = new Vector(this.loc.x * 3.5 ,this.loc.y * 1.75);
+class Button {
+    constructor(buttonNum, text) {
+        this.buttonNum = buttonNum;
+        this.updateLoc();
         this.text = text;
         this.fill = "rgba(211,211,211,.8)";
     }
-    draw(){
+    draw() {
         ctx.beginPath();
         ctx.lineWidth = 5;
-        ctx.moveTo(this.loc.x + 10,this.loc.y);
-        ctx.lineTo(this.loc2.x - 10,this.loc.y);
-        ctx.arc(this.loc2.x - 10, this.loc.y + 10,10,1.5*Math.PI, 0);
-        ctx.lineTo(this.loc2.x,this.loc2.y - 10);
-        ctx.arc(this.loc2.x -10, this.loc2.y - 10,10,0,Math.PI * .5);
-        ctx.lineTo(this.loc.x + 10,this.loc2.y);
-        ctx.arc(this.loc.x +10, this.loc2.y - 10,10,Math.PI * .5, Math.PI);
-        ctx.lineTo(this.loc.x, this.loc.y+10);
-        ctx.arc(this.loc.x+10,this.loc.y + 10,10,Math.PI,Math.PI * 1.5);
+        ctx.moveTo(this.loc.x + 10, this.loc.y);
+        ctx.lineTo(this.loc2.x - 10, this.loc.y);
+        ctx.arc(this.loc2.x - 10, this.loc.y + 10, 10, 1.5 * Math.PI, 0);
+        ctx.lineTo(this.loc2.x, this.loc2.y - 10);
+        ctx.arc(this.loc2.x - 10, this.loc2.y - 10, 10, 0, Math.PI * .5);
+        ctx.lineTo(this.loc.x + 10, this.loc2.y);
+        ctx.arc(this.loc.x + 10, this.loc2.y - 10, 10, Math.PI * .5, Math.PI);
+        ctx.lineTo(this.loc.x, this.loc.y + 10);
+        ctx.arc(this.loc.x + 10, this.loc.y + 10, 10, Math.PI, Math.PI * 1.5);
         ctx.strokeStyle = "rgb(211,211,211)";
         ctx.stroke();
         ctx.fillStyle = this.fill;
@@ -174,12 +173,12 @@ class Button{
         ctx.beginPath();
         ctx.font = "30px Arial";
         ctx.fillStyle = "#000000";
-        ctx.fillText("Illust. 1",this.loc.x + (this.loc2.x - this.loc.x)/4,this.loc.y + (this.loc2.y -this.loc.y)/1.5);
+        ctx.fillText("Illust. 1", this.loc.x + (this.loc2.x - this.loc.x) / 4, this.loc.y + (this.loc2.y - this.loc.y) / 1.5);
         ctx.closePath();
     }
-    updateLoc(){
-        this.loc = newLoc(buttonNum);
-        this.loc2 = new Vector(this.loc.x * 3.5 ,this.loc.y * 1.75);
+    updateLoc() {
+        this.loc = newLoc(this.buttonNum);
+        this.loc2 = new Vector(this.loc.x * 3.5, this.loc.y * 1.75);
     }
 
 }
@@ -188,7 +187,7 @@ var objects = [];
 var i;
 var objCount = 200;
 
-var button = new Button(new Vector(100,100),"Illust. 1");
+var button = new Button(1, "Illust. 1");
 for (i = 0; i < objCount; i++) {
 
     objects.push(new Triangle(new Vector(Math.random() * window.innerWidth, Math.random() * window.innerHeight), 10, "#ffffff", Math.random() * 4));
@@ -197,8 +196,8 @@ for (i = 0; i < objCount; i++) {
 //Loops all functions and draws all nodes
 function draw() {
 
-  ctx.canvas.width  = window.innerWidth;
-  ctx.canvas.height = window.innerHeight;
+    ctx.canvas.width = window.innerWidth;
+    ctx.canvas.height = window.innerHeight;
     ctx.clearRect(0, 0, game.width, game.height);
     for (i = 0; i < objects.length; i++) {
         objects[i].loop();
@@ -223,4 +222,21 @@ function rotatePoint(point, angle, center) {
     var xprime = ((point.x - center.x) * Math.cos(toRadians(angle))) - ((point.y - center.y) * Math.sin(toRadians(angle)));
     var yprime = ((point.y - center.y) * Math.cos(toRadians(angle))) + ((point.x - center.x) * Math.sin(toRadians(angle)));
     return new Vector(xprime + center.x, yprime + center.y);
+}
+
+function newLoc(num) {
+    var height = window.innerHeight;
+    var width = window.innerWidth;
+    switch (num) {
+        case 1:
+            return new Vector(width / 2, height / 2);
+            break;
+        case 2:
+            break;
+        case 3:
+            break;
+        default:
+            break;
+    }
+
 }
