@@ -1,6 +1,7 @@
 var game = document.getElementById("menu");
 var ctx = game.getContext("2d");
 window.onresize = loopLoc;
+window.onclick = checkClick;
 
 //class declarations
 class Triangle {
@@ -172,7 +173,7 @@ class Button {
         ctx.fill();
         ctx.closePath();
         ctx.beginPath();
-        ctx.font = "30px Arial";
+        ctx.font = font;
         ctx.fillStyle = "#000000";
         ctx.fillText(this.text, this.loc.x + (this.loc2.x - this.loc.x) / 4, this.loc.y + (this.loc2.y - this.loc.y) / 1.5);
         ctx.closePath();
@@ -188,7 +189,12 @@ class Button {
 var objects = [];
 var i;
 var objCount = 200;
-var buttons =[];
+var buttons = [];
+var fontString = "px Serif";
+var fontNum;
+var font;
+updateFont();
+var currentWidth = window.innerWidth;
 buttons.push(new Button(1, "Illust. 1"));
 buttons.push(new Button(2, "Illust. 2"));
 buttons.push(new Button(3, "Illust. 3"));
@@ -207,7 +213,7 @@ function draw() {
     for (i = 0; i < objects.length; i++) {
         objects[i].loop();
     }
-    for (i = 0; i < buttons.length; i++){
+    for (i = 0; i < buttons.length; i++) {
         buttons[i].draw();
     }
 }
@@ -237,18 +243,18 @@ function newLoc(num) {
     var vects = [];
     switch (num) {
         case 1:
-            vects.push(new Vector(width -(width*.75), height - height*.8));
-            vects.push(new Vector(width - (width*.25),height - height * .6));
+            vects.push(new Vector(width - (width * .75), height - height * .8));
+            vects.push(new Vector(width - (width * .25), height - height * .6));
             return vects;
             break;
         case 2:
-            vects.push(new Vector(width -(width*.75), height - height*.55));
-            vects.push(new Vector(width - (width*.25),height -height * .35));
+            vects.push(new Vector(width - (width * .75), height - height * .55));
+            vects.push(new Vector(width - (width * .25), height - height * .35));
             return vects;
             break;
         case 3:
-            vects.push(new Vector(width -(width*.75), height - height*.30));
-            vects.push(new Vector(width - (width*.25),height -height * .1));
+            vects.push(new Vector(width - (width * .75), height - height * .30));
+            vects.push(new Vector(width - (width * .25), height - height * .1));
             return vects;
             break;
         default:
@@ -256,9 +262,15 @@ function newLoc(num) {
     }
 
 }
-function loopLoc(){
+
+function loopLoc() {
     var i;
-    for(i = 0; i < buttons.length; i++){
+    updateFont();
+    for (i = 0; i < buttons.length; i++) {
         buttons[i].updateLoc();
     }
+}
+function updateFont(){
+    fontNum = .05 * window.innerHeight;
+    font = fontNum.toString() + fontString;
 }
