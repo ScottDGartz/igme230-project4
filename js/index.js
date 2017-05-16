@@ -41,9 +41,6 @@ class Triangle {
         ctx.lineTo(this.p2.x, this.p2.y);
         ctx.lineTo(this.p3.x, this.p3.y);
         ctx.closePath();
-        ctx.lineWidth = 10;
-        ctx.strokeStyle = "#666666"
-        ctx.stroke;
         ctx.fillStyle = this.fill;
         ctx.fill();
     }
@@ -153,7 +150,21 @@ class Button{
     constructor(loc,text)
     {
         this.loc = loc;
+        this.loc2 = new Vector(this.loc.x + 100,this.loc.y+50);
         this.text = text;
+        this.fill = "#111111";
+    }
+    draw(){
+        ctx.beginPath();
+        ctx.moveTo(this.loc.x,this.loc.y);
+        ctx.lineWidth=10;
+        ctx.lineTo(this.loc2.x - 10,this.loc.y);
+        ctx.arc(this.loc2.x - 10, this.loc.y + 10,10,1.5*Math.PI, 0);
+        ctx.lineTo(this.loc2.x,this.loc2.y - 10);
+        ctx.arc(this.loc2.x -10, this.loc2.y - 10,10,0,Math.PI * .5);
+        ctx.strokeStyle = "#123123";
+        ctx.stroke();
+        ctx.closePath();
     }
 
 }
@@ -162,7 +173,7 @@ var objects = [];
 var i;
 var objCount = 200;
 
-
+var button = new Button(new Vector(100,100),"why");
 for (i = 0; i < objCount; i++) {
 
     objects.push(new Triangle(new Vector(Math.random() * window.innerWidth, Math.random() * window.innerHeight), 10, "#ffffff", Math.random() * 4));
@@ -177,6 +188,7 @@ function draw() {
     for (i = 0; i < objects.length; i++) {
         objects[i].loop();
     }
+    button.draw();
 }
 
 setInterval(draw, 10);
