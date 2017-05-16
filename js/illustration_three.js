@@ -136,6 +136,9 @@ class Rectangle {
 
     //Checks for collision between this rectangle and the current node it is seeking. If there's a collision, it's target gets updated to the next node
     checkNodes() {
+        if(this.i >= nodes.length){
+            this.i = 0;
+        }
         if (this.loc.x < nodes[this.i].loc.x + nodes[this.i].radius && this.loc.x > nodes[this.i].loc.x - nodes[this.i].radius &&
             this.loc.y < nodes[this.i].loc.y + nodes[this.i].radius &&
             this.loc.y > nodes[this.i].loc.y - nodes[this.i].radius) {
@@ -270,7 +273,9 @@ class Node {
         ctx.fill();
         ctx.closePath();
     }
-    click(mouse){
+    click(event){
+        var rect = game.getBoundingClientRect();
+        var mouse =  new Vector(event.clientX - rect.left,event.clientY - rect.top);
         if(Math.sqrt((mouse.x - this.loc.x)*(mouse.x - this.loc.x) + (mouse.y - this.loc.y)*(mouse.y - this.loc.y)) < this.radius){
             nodes.splice(nodes.indexOf(this),1);
             removed = true;
@@ -429,7 +434,7 @@ function up() {
 //Creates a rectangle or circle based on the current number d
 function create() {
     d++;
-    removed = true;
+    removed = false;
     if (d % 2 == 0) {
         objects.push(new Circle(10, new Vector(Math.random() * 1000, Math.random() * 1000), randomColor(), Math.random() * 3));
     } else {
