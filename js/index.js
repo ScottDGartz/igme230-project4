@@ -204,6 +204,7 @@ var currentWidth = window.innerWidth;
 buttons.push(new Button(1, "Illust. 1"));
 buttons.push(new Button(2, "Illust. 2"));
 buttons.push(new Button(3, "Illust. 3"));
+buttons.push(new Button(4,"Documentation"))
 
 for (i = 0; i < objCount; i++) {
 
@@ -250,19 +251,23 @@ function newLoc(num) {
     switch (num) {
         case 1:
             vects.push(new Vector(width - (width * .75), height - height * .8));
-            vects.push(new Vector(width - (width * .25), height - height * .6));
+            vects.push(new Vector(width - (width * .25), height - height * .65));
             return vects;
             break;
         case 2:
-            vects.push(new Vector(width - (width * .75), height - height * .55));
-            vects.push(new Vector(width - (width * .25), height - height * .35));
+            vects.push(new Vector(width - (width * .75), height - height * .6));
+            vects.push(new Vector(width - (width * .25), height - height * .45));
             return vects;
             break;
         case 3:
-            vects.push(new Vector(width - (width * .75), height - height * .30));
-            vects.push(new Vector(width - (width * .25), height - height * .1));
+            vects.push(new Vector(width - (width * .75), height - height * .4));
+            vects.push(new Vector(width - (width * .25), height - height * .25));
             return vects;
             break;
+        case 4:
+            vects.push(new Vector(width - (width * .75), height- height * .2));
+            vects.push(new Vector(width - (width * .25), height - height*.05));
+            return vects;
         default:
             break;
     }
@@ -291,5 +296,10 @@ function checkClick(event){
     }
 }
 function path(buttonNum){
+    if(buttonNum != 4){
         return "illustration_"+buttonNum.toString()+".html";
+    }
+    else{
+        return "documentation.html";
+    }
 }
