@@ -11,4 +11,14 @@ I would then take what I had from the second item, and possibly create some sort
 ## Things I need to learn
 I would need to work on my javascript to manipulate all of these elements. My knowledge from IGME 202 will help me a lot with the steering behaviors I plan to implement. I will probably end up referencing stackoverflow when I need to, but also possibly other resources to brush up on the IGME-202 knowledge, such as my old notes or old work from that course.
 
+# Final Project Info
 
+## Item #1
+For the first illustration, we have a black canvas, a pink circle and a blue square. The two shapes are constantly seeking the middle of the canvas. However, when you click somehwere on the canvas, the target for the two shapes changes, so they now seek that new point. The circle bounces off of the side of the canvas, but the square wraps around to the other side of the canvas.
+## Item #2
+For the second illustration, we again have a black canvas. This time there are a bunch of randomly coloured squares and circles floating around, with triangle "stars" flying in the background. The squares still wrap to the other side, the circles bounce, and the triangles also wrap. However, now, the circles follow where the mouse moves to. The squares to the same thing, until you click. Upon clicking, a node is placed down, and the squares seek the node. If there are multiple nodes, the squares path follow through those nodes one after another.
+## Item #3
+For the third illustration, we still have the black canvas. This time the triangles are properly in the background, whereas for illustration 2, they were clipping with the squares and circles. This time there are no objects at the start. When you click, a node is placed. If you click on the node that is placed, it will delete that node. When you press and hold the mouse button, a square or circle will be spawned once every 100ms. The squares path follow the nodes, and correctly account for if a node is deleted.
+There is also music playing in the background, and a counter in the top left corner for how many Objects and Nodes are in the scene
+## Menu Screen
+There are 4 buttons on the menu screen. Each button resizes based on the window size, and the text in it also resizes. The canvas is fit to the screen width. There are stars in the background. Each button uses javascript with clicking in canvas to link to one of the 3 illustrations, or to the documentation page. 
