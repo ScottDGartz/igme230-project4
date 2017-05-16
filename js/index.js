@@ -147,7 +147,7 @@ class Vector {
 }
 
 class Button{
-    constructor(loc,text)
+    constructor(buttonNum,text)
     {
         this.loc = loc;
         this.loc2 = new Vector(this.loc.x * 3.5 ,this.loc.y * 1.75);
@@ -171,6 +171,15 @@ class Button{
         ctx.fillStyle = this.fill;
         ctx.fill();
         ctx.closePath();
+        ctx.beginPath();
+        ctx.font = "30px Arial";
+        ctx.fillStyle = "#000000";
+        ctx.fillText("Illust. 1",this.loc.x + (this.loc2.x - this.loc.x)/4,this.loc.y + (this.loc2.y -this.loc.y)/1.5);
+        ctx.closePath();
+    }
+    updateLoc(){
+        this.loc = newLoc(buttonNum);
+        this.loc2 = new Vector(this.loc.x * 3.5 ,this.loc.y * 1.75);
     }
 
 }
@@ -179,7 +188,7 @@ var objects = [];
 var i;
 var objCount = 200;
 
-var button = new Button(new Vector(100,100),"why");
+var button = new Button(new Vector(100,100),"Illust. 1");
 for (i = 0; i < objCount; i++) {
 
     objects.push(new Triangle(new Vector(Math.random() * window.innerWidth, Math.random() * window.innerHeight), 10, "#ffffff", Math.random() * 4));
