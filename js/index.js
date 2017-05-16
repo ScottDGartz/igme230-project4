@@ -156,12 +156,16 @@ class Button{
     }
     draw(){
         ctx.beginPath();
-        ctx.moveTo(this.loc.x,this.loc.y);
+        ctx.moveTo(this.loc.x + 10,this.loc.y);
         ctx.lineWidth=10;
         ctx.lineTo(this.loc2.x - 10,this.loc.y);
         ctx.arc(this.loc2.x - 10, this.loc.y + 10,10,1.5*Math.PI, 0);
         ctx.lineTo(this.loc2.x,this.loc2.y - 10);
         ctx.arc(this.loc2.x -10, this.loc2.y - 10,10,0,Math.PI * .5);
+        ctx.lineTo(this.loc.x + 10,this.loc2.y);
+        ctx.arc(this.loc.x +10, this.loc2.y - 10,10,Math.PI * .5, Math.PI);
+        ctx.lineTo(this.loc.x, this.loc.y+10);
+        ctx.arc(this.loc.x+10,this.loc.y + 10,10,Math.PI,Math.PI * 1.5);
         ctx.strokeStyle = "#123123";
         ctx.stroke();
         ctx.closePath();
